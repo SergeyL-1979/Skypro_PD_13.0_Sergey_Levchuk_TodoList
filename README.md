@@ -1,7 +1,5 @@
 # Skypro_PD_13.0_Sergey_Levchuk_TodoList
 
-### НАЧАЛО
-
 * Project: TodoList
 * Description: "Work with notes, schedule reminder, work with calendar." \
 `(Работа с заметками, напоминанием по расписанию, работа с календарем.)`
