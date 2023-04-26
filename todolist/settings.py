@@ -16,11 +16,6 @@ from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
-env = environ.Env(
-    # set casting, default value
-    DEBUG=(bool, False)
-)
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # Для debug версии
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +30,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = os.environ.get('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -96,7 +91,7 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 # ==== ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ PostgreSQL ====
 DATABASES = {
     'default': {
-        'ENGINE': os.environ.get('DB_ENGINE'),
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
