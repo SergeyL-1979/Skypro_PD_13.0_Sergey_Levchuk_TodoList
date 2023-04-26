@@ -15,8 +15,8 @@ class User(AbstractUser):
             from django.utils.safestring import mark_safe
             return mark_safe(u'<a href="{0}" target="_blank"><img src="{0}" width="150"/></a>'.format(self.image.url))
         else:
-            return '(Нет изображения)'
+            return '(Нет аватарки)'
 
-    image_.short_description = 'Аватарка пользователя'
+    image_.short_description = 'Аватарка'
     image_.allow_tags = True
 
