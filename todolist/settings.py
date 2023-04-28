@@ -91,17 +91,6 @@ WSGI_APPLICATION = 'todolist.wsgi.application'
 #     }
 # }
 # ==== ПОДКЛЮЧЕНИЕ К БАЗЕ ДАННЫХ PostgreSQL ====
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': os.environ.get('DB_NAME'),
-#         'USER': os.environ.get('DB_USER'),
-#         'PASSWORD': os.environ.get('DB_PASSWORD'),
-#         'HOST': os.environ.get('DB_HOST'),
-#         'PORT': os.environ.get('DB_PORT'),
-#     }
-# }
-# === НАСТРОЙКА POSTGRESQL ДЛЯ DOCKER КОНТЕЙНЕРА ===
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
