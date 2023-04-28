@@ -2,12 +2,12 @@
 version: '3.9'
 
 services:
-#  frontend:
-#    image: sermalenk/skypro-front:base
-#    ports:
-#      - "88:80"
-#    depends_on:
-#      - api
+  frontend:
+    image: sermalenk/skypro-front:base
+    ports:
+      - "88:80"
+    depends_on:
+      - api
 
   api:
     # Сборка образа для сервиса django из текущей директории
