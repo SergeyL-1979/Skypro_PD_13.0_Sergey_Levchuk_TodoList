@@ -33,6 +33,9 @@ jobs:
       - name: Checkout
         uses: action/checkout@v3
 
+      - name: clone code
+        uses: action/checkout@v3
+
       - name: Render config
         run: |-
           mkdir deploy
