@@ -34,16 +34,13 @@ jobs:
 #    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout code
-#        uses: action/checkout@v3
+        uses: actions/checkout@v3
+
+      - name: Render config
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > docker-compose.yaml
-#
-#      - name: Render config
-#        run: |-
-#          mkdir deploy
-#          cat docker-compose-ci.yml | envsubst > docker-compose.yaml
-#
+
       - name: Clone files to server
         uses: appleboy/scp-action@master
         with:
