@@ -32,6 +32,7 @@ jobs:
     steps:
       - name: Checkout
         uses: action/checkout@v3
+      - run: echo docker-compose-ci.yml > docker-compose.yaml
 
       - name: Render config
         run: |-
