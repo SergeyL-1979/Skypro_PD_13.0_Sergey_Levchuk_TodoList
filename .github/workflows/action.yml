@@ -41,7 +41,7 @@ jobs:
 
       - name: Clone files to server
 #        uses: siva1024/scp-deployer@latest
-        uses: appleboy/scp-action@v0.0.1
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
