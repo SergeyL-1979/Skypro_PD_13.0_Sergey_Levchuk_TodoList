@@ -24,13 +24,13 @@ jobs:
 
   deploy:
     runs-on: ubuntu-20.04
-    permissions:
-      contents: read
     needs: build_and_push
     env:
       POSTGRES_DB: ${{ secrets.SQL_DB_NAME }}
       POSTGRES_USER: ${{ secrets.SQL_DB_USER }}
       POSTGRES_PASSWORD: ${{ secrets.SQL_DB_PASSWORD }}
+    permissions:
+      contents: read
     steps:
       - name: Checkout
         uses: action/checkout@v2
