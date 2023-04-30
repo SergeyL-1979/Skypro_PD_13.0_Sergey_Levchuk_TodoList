@@ -31,8 +31,6 @@ services:
   migrations:
     build:
       context: .
-#    env_file:
-#      - .env.dev
     container_name: migrations
     environment:
       POSTGRES_HOST: pgdb
