@@ -24,6 +24,8 @@ jobs:
 
   deploy:
     runs-on: ubuntu-20.04
+    permissions:
+      contents: read
     needs: build_and_push
     env:
       POSTGRES_DB: ${{ secrets.SQL_DB_NAME }}
