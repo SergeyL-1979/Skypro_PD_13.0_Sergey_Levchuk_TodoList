@@ -32,8 +32,8 @@ jobs:
     steps:
       - name: Checkout
         uses: action/checkout@v3
-#        with:
-#          path: main
+        with:
+          path: main
 
       - name: Render config
         run: |-
