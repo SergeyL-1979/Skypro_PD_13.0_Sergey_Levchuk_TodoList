@@ -32,9 +32,9 @@ jobs:
 #      POSTGRES_USER: ${{ secrets.SQL_DB_USER }}
 #      POSTGRES_PASSWORD: ${{ secrets.SQL_DB_PASSWORD }}
 #    if: github.ref == 'refs/heads/main'
-#    steps:
-#      - name: Checkout code
-#        uses: action/checkout@v3
+    steps:
+      - name: Checkout code
+        uses: action/checkout@v3
 #
 #      - name: Render config
 #        run: |-
