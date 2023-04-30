@@ -163,7 +163,8 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.vk.VKOAuth2',  # бекенд авторизации через ВКонтакте
 ]
 
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_POSTGRES_ENABLED = True
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'photos', 'notify']
 # SOCIAL_AUTH_JSONFIELD_ENABLED = True
 # SOCIAL_AUTH_URL_NAMESPACE = "social"
