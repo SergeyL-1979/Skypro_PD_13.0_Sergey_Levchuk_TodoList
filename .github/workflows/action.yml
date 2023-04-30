@@ -32,7 +32,9 @@ jobs:
 #    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+#        uses: actions/checkout@v3
+        uses: actions/checkout@v0.1.4
+
 
       - name: Render config
         run: |-
@@ -40,7 +42,8 @@ jobs:
           cat docker-compose-ci.yml | envsubst > docker-compose.yaml
 
       - name: Clone files to server
-        uses: siva1024/scp-deployer@latest
+#        uses: siva1024/scp-deployer@latest
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
