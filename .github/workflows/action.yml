@@ -31,7 +31,7 @@ jobs:
       POSTGRES_PASSWORD: ${{ secrets.SQL_DB_PASSWORD }}
     steps:
       - name: Checkout
-        uses: action/checkout@v3
+        uses: action/checkout@v2
 
       - name: Render config
         run: |-
