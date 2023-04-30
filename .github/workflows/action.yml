@@ -2,8 +2,6 @@ name: Build and deploy action
 on:
   push:
     branches: ["main"]
-  pull_request:
-    branches: ["main"]
 
 jobs:
   build_and_push:
@@ -36,7 +34,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-
+      - name: Render config
+        run: |-
+          mkdir deploy
+          cat docker-compose-ci.yml | envsubst > docker-compose.yaml
 
       - name: Clone files to server
         uses: siva1024/scp-deployer@latest
@@ -49,10 +50,6 @@ jobs:
           source: "deploy/docker-compose.yaml"
           target: "todo"
 #          strip_components: 1
-      - name: Render config
-        run: |-
-          mkdir deploy
-          cat docker-compose-ci.yml | envsubst > docker-compose.yaml
 
 #      - name: Executing remote SSH commands using SSH_KEY
 #        uses: appleboy/ssh-action@v0.1.8
