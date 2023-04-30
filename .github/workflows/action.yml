@@ -2,6 +2,8 @@ name: Build and deploy action
 on:
   push:
     branches: ["main"]
+  pull_request:
+    branches: ["main"]
 
 jobs:
   build_and_push:
@@ -23,16 +25,16 @@ jobs:
           docker push sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
 
   deploy:
-    runs-on: ubuntu-20.04
     needs: build_and_push
+    runs-on: ubuntu-20.04
     env:
       POSTGRES_DB: ${{ secrets.SQL_DB_NAME }}
       POSTGRES_USER: ${{ secrets.SQL_DB_USER }}
       POSTGRES_PASSWORD: ${{ secrets.SQL_DB_PASSWORD }}
+    if: github.ref == 'refs/heads/main'
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: action/checkout@v3
-      - run: echo docker-compose-ci.yml > docker-compose.yaml
 
       - name: Render config
         run: |-
