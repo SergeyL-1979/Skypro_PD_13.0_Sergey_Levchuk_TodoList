@@ -46,8 +46,8 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-#          password: ${{ secrets.SSH_PASSWORD }}
-          key: ${{ secrets.SECRET_REPO_DEPLOY_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
+#          key: ${{ secrets.SECRET_REPO_DEPLOY_KEY }}
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
           target: "todolist"
