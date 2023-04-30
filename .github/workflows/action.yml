@@ -42,7 +42,7 @@ jobs:
           cat docker-compose-ci.yml | envsubst > docker-compose.yaml
 
       - name: Clone files to server
-        uses: appleboy/scp-deployer@latest
+        uses: siva1024/scp-deployer@latest
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
