@@ -30,8 +30,8 @@ jobs:
       POSTGRES_USER: ${{ secrets.SQL_DB_USER }}
       POSTGRES_PASSWORD: ${{ secrets.SQL_DB_PASSWORD }}
     steps:
-#      - name: Checkout
-#        uses: action/checkout@v3
+      - name: Checkout
+        uses: action/checkout@v3
 
       - name: Render config
         uses: action/checkout@v3
