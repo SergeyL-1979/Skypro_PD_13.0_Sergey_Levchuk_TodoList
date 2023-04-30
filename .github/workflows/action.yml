@@ -33,16 +33,13 @@ jobs:
       - name: Checkout
         uses: action/checkout@v3
 
-      - name: clone code
-        uses: action/checkout@v3
-
       - name: Render config
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > docker-compose.yaml
 
       - name: Clone files to server
-        uses: appleboy/scp-action@master
+        uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
