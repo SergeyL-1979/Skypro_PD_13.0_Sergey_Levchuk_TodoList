@@ -34,7 +34,6 @@ jobs:
         uses: action/checkout@v3
 
       - name: Render config
-        uses: action/checkout@v3
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > docker-compose.yaml
