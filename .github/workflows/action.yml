@@ -59,10 +59,13 @@ jobs:
           port: ${{ secrets.PORT }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
-          target: "app"
+          target: "/home/skypro/deploy/"
           strip_components: 1
+      - name: Print Info
+        run: echo "Deploy at https://${BRANCH_NAME}.app.example.ru/"
 
 #      - name: Executing remote SSH commands using SSH_KEY
 #        uses: appleboy/ssh-action@v0.1.8
