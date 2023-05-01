@@ -30,8 +30,7 @@ jobs:
       SQL_DB_USER: ${{secrets.SQL_DB_USER}}
       SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
       SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
-      SUPERUSER_EMAIL: ${{}}
-      SUPERUSER_PASSWORD: ${{}}
+
     steps:
       - name: Checkout
         uses: actions/checkout@v3.5.2
