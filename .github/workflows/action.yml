@@ -56,9 +56,9 @@ jobs:
         with:
           # Эти значения надо вписать в секреты гитхаба
           host: ${{ secrets.HOST }}
-#          port: ${{ secrets.PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          username: skypro
+          password: WialonCeiba-2020
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
           target: "app"
