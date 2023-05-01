@@ -46,7 +46,7 @@ services:
       migrations:
         condition: service_completed_successfully
     command:
-      python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('admin', '$SUPERUSER_EMAIL', '$SUPERUSER_PASSWORD')"
+      python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
   pgdb:
     # Использование готового образа postgres
