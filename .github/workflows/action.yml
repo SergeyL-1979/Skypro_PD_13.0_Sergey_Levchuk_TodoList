@@ -51,7 +51,7 @@ jobs:
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
           target: "/home/skypro/skytodo/"
-          strip_components: 1
+#          strip_components: 1
 
 #      - name: Executing remote SSH commands using SSH_KEY
 #        uses: appleboy/ssh-action@v0.1.8
