@@ -45,12 +45,12 @@ jobs:
         env:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-#          key: ${{ secrets.SECRET_REPO_DEPLOY_KEY }}
+#          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SECRET_REPO_DEPLOY_KEY }}
         with:
           # Указываем, какие файлы копировать
-          source: "deploy/skypro/docker-compose.yaml"
-          target: "/home/skypro/skytodo"
+          source: "deploy/docker-compose.yaml"
+          target: "/home/skypro/skytodo/"
           strip_components: 1
 
 #      - name: Executing remote SSH commands using SSH_KEY
