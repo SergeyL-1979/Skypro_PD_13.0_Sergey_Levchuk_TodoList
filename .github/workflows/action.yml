@@ -40,9 +40,8 @@ jobs:
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
-          cat docker-compose.yaml
 
-      # ===== BEGIN SSH EXIT =========
+      # ========= BEGIN SSH EXIT ==========
       - name: Clone files to server
         uses: appleboy/scp-action@v0.1.4
         with:
@@ -56,14 +55,15 @@ jobs:
           target: "deploy"
           strip_components: 1
 
-#      - name: Executing remote SSH commands using SSH_KEY
-#        uses: appleboy/ssh-action@v0.1.8
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.SSH_USERNAME }}
-#          password: ${{ secrets.SSH_PASSWORD }}
-#          script: |-
-#            whoami
-#            cd todolist
-#            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
-        
+      # ========== START DOCKER CONTAINER ==========
+      - name: Executing remote SSH commands using PASSWORD
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |-
+            whoami
+            cd deploy
+            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
