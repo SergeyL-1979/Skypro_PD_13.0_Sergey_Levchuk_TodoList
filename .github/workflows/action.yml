@@ -40,16 +40,16 @@ jobs:
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
 
       - name: Clone files to server
-        uses: siva1024/scp-deployer@latest
-#        uses: appleboy/scp-action@master
+#        uses: siva1024/scp-deployer@latest
+        uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-#          key: ${{ secrets.SECRET_REPO_DEPLOY_KEY }}
+#          password: ${{ secrets.SSH_PASSWORD }}
+          key: ${{ secrets.SECRET_REPO_DEPLOY_KEY }}
           # Указываем, какие файлы копировать
 #          source: "deploy/docker-compose.yaml"
-#          target: "stodo"
+#          target: "skytodo"
 #          strip_components: 1
           script: |
             whoami
