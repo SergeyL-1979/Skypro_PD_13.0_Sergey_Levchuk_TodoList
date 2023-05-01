@@ -26,7 +26,7 @@ jobs:
     needs: build_and_push
     runs-on: ubuntu-20.04
     env:
-      POSTGRES_DB: w
+      POSTGRES_DB: $SQL_DB_NAME
       POSTGRES_USER: ${{secrets.SQL_DB_USER}}
       POSTGRES_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
     steps:
