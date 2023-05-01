@@ -51,7 +51,7 @@ jobs:
 #          key: ${{ secrets.SSH_PRIVATE_KEY }}
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
-          target: "/home/deploy/deploy/"
+          target: "deploy"
           strip_components: 1
 
 #      - name: Executing remote SSH commands using SSH_KEY
