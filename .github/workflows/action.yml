@@ -29,7 +29,6 @@ jobs:
       POSTGRES_DB: ${{ secrets.SQL_DB_NAME }}
       POSTGRES_USER: ${{ secrets.SQL_DB_USER }}
       POSTGRES_PASSWORD: ${{ secrets.SQL_DB_PASSWORD }}
-#    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -40,27 +39,16 @@ jobs:
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
 
       - name: Clone files to server
+#        uses: siva1024/scp-deployer@latest
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: skypro
-          password: WialonCeiba-2020
-          port: ${{ secrets.PORT }}
-          source: deploy/skypro/docker-compose.yaml
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+#          port: ${{ secrets.PORT }}
+          source: "deploy/docker-compose.yaml"
           target: "/home/skypro/deploy/"
           strip_components: 1
-#        uses: siva1024/scp-deployer@latest
-#        uses: appleboy/scp-action@master
-#        env:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.SSH_USERNAME }}
-#          password: ${{ secrets.SSH_PASSWORD }}
-##          private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-#        with:
-#          # Указываем, какие файлы копировать
-#          source: "deploy/docker-compose.yaml"
-#          target: "/home/skypro/skytodo/"
-#          strip_components: 1
 
 #      - name: Executing remote SSH commands using SSH_KEY
 #        uses: appleboy/ssh-action@v0.1.8
