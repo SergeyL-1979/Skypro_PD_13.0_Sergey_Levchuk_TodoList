@@ -43,8 +43,8 @@ jobs:
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
+          username: skypro
+          password: WialonCeiba-2020
           port: ${{ secrets.PORT }}
           source: deploy/skypro/docker-compose.yaml
           target: "/home/skypro/deploy/"
