@@ -56,6 +56,7 @@ jobs:
         with:
           # Эти значения надо вписать в секреты гитхаба
           host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           # Указываем, какие файлы копировать
