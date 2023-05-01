@@ -23,7 +23,7 @@ services:
     ports:
       - "8000:8000"
     env_file:
-      - ./.env
+      - .:/.env
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
