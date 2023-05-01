@@ -45,8 +45,8 @@ jobs:
         env:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
-#          password: ${{ secrets.SSH_PASSWORD }}
-          private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SSH_PASSWORD }}
+#          private_key: ${{ secrets.SSH_PRIVATE_KEY }}
         with:
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
