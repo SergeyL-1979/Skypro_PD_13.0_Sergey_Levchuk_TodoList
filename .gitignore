@@ -122,7 +122,6 @@ celerybeat.pid
 # Environments
 .env
 .env.backup
-.docker_ci_env
 .venv
 env/
 venv/
