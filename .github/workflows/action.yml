@@ -36,7 +36,7 @@ jobs:
       - name: render config
         run: |-
           mkdir deploy
-          cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
+          echo docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
 
 #      - name: Clone files to server
 ##        uses: siva1024/scp-deployer@latest
@@ -56,7 +56,7 @@ jobs:
         with:
           # Эти значения надо вписать в секреты гитхаба
           host: '${{ secrets.HOST }}'
-          port: '${{ secrets.PORT }}'
+          port: ${{ secrets.PORT }}
           username: '${{ secrets.SSH_USERNAME }}'
 #          password: '${{ secrets.SSH_PASSWORD }}'
           key: '${{ secrets.SSH_PRIVATE_KEY }}'
