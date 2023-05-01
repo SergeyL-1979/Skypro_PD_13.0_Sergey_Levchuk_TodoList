@@ -3,7 +3,7 @@ version: '3.9'
 
 services:
   frontend:
-    image: sermalenk/skypro-front:base
+    image: sermalenk/skypro-front:lesson-34
     container_name: frontend
     ports:
       - "88:80"
