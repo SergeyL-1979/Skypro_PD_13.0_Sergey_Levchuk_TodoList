@@ -49,9 +49,7 @@ jobs:
 #          source: "deploy/docker-compose.yaml"
 #          target: "/home/skypro/deploy/"
 #          strip_components: 1
-      - name: Print Info
-        run: | 
-          example-command "$HOST"
+
       # ===== BEGIN SSH EXIT =========
       - name: clone files to server
         uses: appleboy/scp-action@master
@@ -59,9 +57,9 @@ jobs:
           # Эти значения надо вписать в секреты гитхаба
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
-#          username: '${{ secrets.SSH_USERNAME }}'
-          password: '${{ secrets.SSH_PASSWORD }}'
-          key: '${{ secrets.SSH_PRIVATE_KEY }}'
+          username: ${{ secrets.SSH_USERNAME }}
+#          password: '${{ secrets.SSH_PASSWORD }}'
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
           target: "/home/skypro/deploy/"
