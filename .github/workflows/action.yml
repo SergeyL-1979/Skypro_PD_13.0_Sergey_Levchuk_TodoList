@@ -49,7 +49,8 @@ jobs:
 #          source: "deploy/docker-compose.yaml"
 #          target: "/home/skypro/deploy/"
 #          strip_components: 1
-
+      - name: Print Info
+        run: echo "${{ secrets.HOST }}"
       # ===== BEGIN SSH EXIT =========
       - name: clone files to server
         uses: appleboy/scp-action@master
@@ -64,8 +65,8 @@ jobs:
           source: "deploy/docker-compose.yaml"
           target: "/home/skypro/deploy/"
           strip_components: 1
-      - name: Print Info
-        run: echo "Deploy at https://${BRANCH_NAME}.app.example.ru/"
+#      - name: Print Info
+#        run: echo "${{ secrets.HOST }}"
 
 #      - name: Executing remote SSH commands using SSH_KEY
 #        uses: appleboy/ssh-action@v0.1.8
