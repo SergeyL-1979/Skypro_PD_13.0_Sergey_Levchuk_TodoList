@@ -45,6 +45,7 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
+          port: ${{ secrets.PORT }}
           source: "deploy/docker-compose.yaml"
           target: "/home/skypro/deploy/"
           strip_components: 1
