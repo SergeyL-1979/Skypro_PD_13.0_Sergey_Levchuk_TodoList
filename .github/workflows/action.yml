@@ -40,7 +40,10 @@ jobs:
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
-          cat .docker_ci_env | envsubst > deploy/.env
+#          cat .docker_ci_env | envsubst > deploy/.env
+      - name: Create env file
+        run: |
+          echo ${{ secrets.ENV_FILE }} > .env
 
       # ========= BEGIN SSH EXIT ==========
       - name: Clone files to server
