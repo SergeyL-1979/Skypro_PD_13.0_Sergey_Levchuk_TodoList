@@ -33,7 +33,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: render config
+      - name: Render config
         run: |-
           mkdir deploy
           echo docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
@@ -51,21 +51,19 @@ jobs:
 #          strip_components: 1
 
       # ===== BEGIN SSH EXIT =========
-      - name: clone files to server
+      - name: Clone files to server
         uses: appleboy/scp-action@master
         with:
           # Эти значения надо вписать в секреты гитхаба
           host: ${{ secrets.HOST }}
           port: ${{ secrets.PORT }}
           username: ${{ secrets.SSH_USERNAME }}
-#          password: '${{ secrets.SSH_PASSWORD }}'
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: '${{ secrets.SSH_PASSWORD }}'
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
           # Указываем, какие файлы копировать
           source: "deploy/docker-compose.yaml"
           target: "/home/skypro/deploy/"
           strip_components: 1
-#      - name: Print Info
-#        run: echo "${{ secrets.HOST }}"
 
 #      - name: Executing remote SSH commands using SSH_KEY
 #        uses: appleboy/ssh-action@v0.1.8
