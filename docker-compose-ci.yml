@@ -52,7 +52,7 @@ services:
       api:
         condition: service_started
       migrations:
-        condition: service_completed_successfully
+        condition: service_healthy
     command:
       python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
@@ -70,8 +70,8 @@ services:
      # Задание имени контейнера для сервиса pgdb
     container_name: pgdb
      # Связывание тома с директорией в контейнере для сохранения данных postgres
-#    volumes:
-#      - pgdbdata:/var/lib/postgresql/data/
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${SQL_DB_USER} -d ${SQL_DB_NAME}"]
       interval: 5s
