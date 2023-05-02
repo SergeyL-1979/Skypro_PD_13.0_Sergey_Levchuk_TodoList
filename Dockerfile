@@ -12,7 +12,7 @@ ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 # Устанавливает рабочий каталог контейнера — "code"
-COPY . ./app
+COPY . /app
 WORKDIR /app
 
 # Копирует все файлы из нашего локального проекта в контейнер
