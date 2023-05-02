@@ -23,6 +23,7 @@ services:
       - "8000:8000"
     environment:
       POSTGRES_HOST: pgdb
+    network_mode: host
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
@@ -30,7 +31,7 @@ services:
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     container_name: migrations
-    network_mode: host
+
     depends_on:
 
       pgdb:
