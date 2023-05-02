@@ -12,15 +12,16 @@ ADD requirements.txt /app/requirements.txt
 RUN pip install -r /app/requirements.txt
 
 # Устанавливает рабочий каталог контейнера — "code"
-#COPY . .
+COPY . /app
 WORKDIR /app
+
 
 # Копирует все файлы из нашего локального проекта в контейнер
 COPY requirements.txt /app
 
 # |ВАЖНЫЙ МОМЕНТ| копируем содержимое папки, где находится Dockerfile, в рабочую директорию контейнера
 # если закоментировать то изменения в контейнере будут происходить срузу
-COPY . .
+COPY . /app
 
 EXPOSE 8000
 
