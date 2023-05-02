@@ -32,7 +32,7 @@ services:
     build:
       context: .
     container_name: migrations
-
+    network_mode: host
     depends_on:
 
       pgdb:
@@ -78,6 +78,6 @@ volumes:
   database:
   frontend:
 
-networks:
-  migrations:
-    driver: bridge
+#networks:
+#  migrations:
+#    driver: bridge
