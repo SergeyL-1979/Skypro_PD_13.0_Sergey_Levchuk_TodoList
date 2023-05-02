@@ -32,8 +32,7 @@ services:
     container_name: migrations
 
     depends_on:
-      api:
-        condition: service_started
+
       pgdb:
         condition: service_healthy
     command: python manage.py migrate
