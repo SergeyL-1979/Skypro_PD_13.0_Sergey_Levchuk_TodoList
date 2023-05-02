@@ -6,7 +6,7 @@ services:
     image: sermalenk/skypro-front:base
     container_name: frontend
     ports:
-      - "88:80"
+      - "80:80"
     depends_on:
       - api
 
