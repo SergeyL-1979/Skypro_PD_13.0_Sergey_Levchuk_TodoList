@@ -7,13 +7,13 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip
 
-ADD requirements.txt /app/requirements.txt
+ADD requirements.txt /usr/src/app/requirements.txt
 # Запускает команду pip install для всех библиотек, перечисленных в requirements.txt
-RUN pip install -r /app/requirements.txt
+RUN pip install -r /usr/src/app/requirements.txt
 
 # Устанавливает рабочий каталог контейнера — "code"
-COPY . /app
-WORKDIR /app
+COPY . /usr/src/app
+WORKDIR /usr/src/app
 
 # Копирует все файлы из нашего локального проекта в контейнер
 #COPY requirements.txt /app
