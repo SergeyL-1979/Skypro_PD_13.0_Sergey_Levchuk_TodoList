@@ -38,6 +38,8 @@ services:
 #        condition: service_started
       pgdb:
         condition: service_healthy
+    volumes:
+      - ./.env:/app/.env
     command: python manage.py migrate
 
   createuser:
