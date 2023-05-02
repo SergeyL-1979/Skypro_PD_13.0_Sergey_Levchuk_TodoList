@@ -15,7 +15,6 @@ RUN pip install -r /app/requirements.txt
 COPY . /app
 WORKDIR /app
 
-
 # Копирует все файлы из нашего локального проекта в контейнер
 COPY requirements.txt /app
 
