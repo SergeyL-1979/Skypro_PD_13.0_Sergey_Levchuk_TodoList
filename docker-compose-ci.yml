@@ -33,11 +33,11 @@ services:
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     container_name: migrations
-    environment:
-      POSTGRES_HOST: pgdb
+#    environment:
+#      POSTGRES_HOST: pgdb
     depends_on:
-      api:
-        condition: service_started
+#      api:
+#        condition: service_started
       pgdb:
         condition: service_healthy
     command: python manage.py migrate
