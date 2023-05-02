@@ -79,5 +79,5 @@ volumes:
   frontend:
 
 networks:
-  pgdb:
+  migrations:
     driver: bridge
