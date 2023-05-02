@@ -7,20 +7,20 @@ ENV PYTHONUNBUFFERED 1
 
 RUN pip install --upgrade pip
 
-ADD requirements.txt /app/requirements.txt
+ADD requirements.txt /usr/src/requirements.txt
 # Запускает команду pip install для всех библиотек, перечисленных в requirements.txt
-RUN pip install -r /app/requirements.txt
+RUN pip install -r /usr/src/requirements.txt
 
 # Устанавливает рабочий каталог контейнера — "code"
-COPY . /app
-WORKDIR /home/deploy/app
+COPY . /usr/src/app
+WORKDIR /usr/src/app
 
 # Копирует все файлы из нашего локального проекта в контейнер
 #COPY requirements.txt /app
 
 # |ВАЖНЫЙ МОМЕНТ| копируем содержимое папки, где находится Dockerfile, в рабочую директорию контейнера
 # если закоментировать то изменения в контейнере будут происходить срузу
-COPY . .
+#COPY . /usr/src/app
 
 EXPOSE 8000
 
