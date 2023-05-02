@@ -19,7 +19,6 @@ services:
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-#      - ./:/app/
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
@@ -36,12 +35,10 @@ services:
     environment:
       POSTGRES_HOST: pgdb
     depends_on:
-#      api:
-#        condition: service_started
+      api:
+        condition: service_started
       pgdb:
         condition: service_healthy
-    volumes:
-      - ./.env:/app/.env
     command: python manage.py migrate
 
   createuser:
