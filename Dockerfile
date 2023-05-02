@@ -5,7 +5,7 @@ FROM python:3.9.0-slim
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-#RUN pip install --upgrade pip
+RUN pip install --upgrade pip
 
 #ADD requirements.txt /app/requirements.txt
 # Запускает команду pip install для всех библиотек, перечисленных в requirements.txt
