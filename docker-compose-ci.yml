@@ -67,8 +67,8 @@ services:
      # Задание имени контейнера для сервиса pgdb
     container_name: pgdb
      # Связывание тома с директорией в контейнере для сохранения данных postgres
-#    volumes:
-#      - pgdbdata:/var/lib/postgresql/data/
+    volumes:
+      - pgdbdata:/var/lib/postgresql/data/
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${SQL_DB_USER} -d ${SQL_DB_NAME}"]
       interval: 5s
@@ -79,4 +79,3 @@ volumes:
   pgdbdata:
   database:
   frontend:
-  migrations:
