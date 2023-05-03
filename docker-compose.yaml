@@ -24,6 +24,7 @@ services:
       - "8000:8000"
     environment:
       POSTGRES_HOST: pgdb
+      POSTGRES_PORT: 5432
       POSTGRES_DB: ${SQL_DB_NAME}
       POSTGRES_USER: ${SQL_DB_USER}
       POSTGRES_PASSWORD: ${SQL_DB_PASSWORD}
@@ -37,6 +38,7 @@ services:
     container_name: migrations
     environment:
       POSTGRES_HOST: pgdb
+      POSTGRES_PORT: 5432
     depends_on:
 #      api:
 #        condition: service_started
