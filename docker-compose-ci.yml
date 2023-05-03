@@ -48,8 +48,8 @@ services:
       POSTGRES_HOST: pgdb
       POSTGRES_PORT: 5432
     depends_on:
-      api:
-        condition: service_started
+#      api:
+#        condition: service_started
       pgdb:
         condition: service_healthy
     command: python manage.py migrate
