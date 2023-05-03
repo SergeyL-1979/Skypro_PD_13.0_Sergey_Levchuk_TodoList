@@ -80,7 +80,7 @@ services:
       retries: 15
 
 volumes:
-  pgdb:
+  pgdbdata:
     driver: local
   database:
   frontend:
