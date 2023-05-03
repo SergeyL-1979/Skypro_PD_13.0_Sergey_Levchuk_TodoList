@@ -17,8 +17,7 @@ services:
     container_name: api
     # Задание команды, которую нужно запустить при запуске контейнера для сервиса django
     command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
+
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
@@ -31,6 +30,8 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
+    volumes:
+      - .:/app
 
   migrations:
     build:
@@ -44,6 +45,8 @@ services:
         condition: service_started
       pgdb:
         condition: service_healthy
+    volumes:
+      - ./.docker_env:/app/.env
     command: python manage.py migrate
 
   createuser:
@@ -73,7 +76,8 @@ services:
     container_name: pgdb
      # Связывание тома с директорией в контейнере для сохранения данных postgres
     volumes:
-      - pgdbdata:/var/lib/postgresql/data/
+#      - pgdbdata:/var/lib/postgresql/data/
+      - ./postgres-data:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${SQL_DB_USER} -d ${SQL_DB_NAME}"]
       interval: 5s
