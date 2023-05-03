@@ -81,5 +81,5 @@ services:
 volumes:
   pgdbdata:
     driver: local
-  database:
+#  database:
   frontend:
