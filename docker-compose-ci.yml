@@ -15,7 +15,7 @@ services:
     # Задание имени контейнера для сервиса django
     container_name: api
     # Задание команды, которую нужно запустить при запуске контейнера для сервиса django
-    command: python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000 | python manage.py migrate
     volumes:
       - .:/app
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
@@ -31,18 +31,18 @@ services:
     depends_on:
       - pgdb
 
-  migrations:
-    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-    container_name: migrations
-#    environment:
-#      POSTGRES_HOST: pgdb
-#      POSTGRES_PORT: 5432
-    depends_on:
-#      api:
-#        condition: service_started
-      pgdb:
-        condition: service_healthy
-    command: python manage.py migrate
+#  migrations:
+#    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+#    container_name: migrations
+##    environment:
+##      POSTGRES_HOST: pgdb
+##      POSTGRES_PORT: 5432
+#    depends_on:
+##      api:
+##        condition: service_started
+#      pgdb:
+#        condition: service_healthy
+#    command: python manage.py migrate
 
   createuser:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -50,8 +50,8 @@ services:
     depends_on:
       api:
         condition: service_started
-      migrations:
-        condition: service_completed_successfully
+#      migrations:
+#        condition: service_completed_successfully
     command:
       python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
@@ -80,4 +80,3 @@ services:
 volumes:
   pgdbdata:
   frontend:
-  api:
