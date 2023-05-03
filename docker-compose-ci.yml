@@ -40,6 +40,8 @@ services:
 #        condition: service_started
       pgdb:
         condition: service_healthy
+    networks:
+      - elastic
     command: python manage.py migrate
 
   createuser:
@@ -74,8 +76,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 15
+    networks:
+      - elastic
 
 volumes:
   pgdbdata:
   database:
   frontend:
+
+networks:
+  elastic:
+    driver: bridge
