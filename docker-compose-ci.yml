@@ -34,9 +34,9 @@ services:
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     container_name: migrations
-    environment:
-      POSTGRES_HOST: pgdb
-      POSTGRES_PORT: 5432
+#    environment:
+#      POSTGRES_HOST: pgdb
+#      POSTGRES_PORT: 5432
     depends_on:
 #      api:
 #        condition: service_started
