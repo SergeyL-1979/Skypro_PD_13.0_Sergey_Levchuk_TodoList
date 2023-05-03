@@ -30,6 +30,8 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
+    networks:
+      - elastic
 
   migrations:
     build:
@@ -42,8 +44,7 @@ services:
 #        condition: service_started
       pgdb:
         condition: service_healthy
-    networks:
-      - elastic
+
     command: python manage.py migrate
 
   createuser:
