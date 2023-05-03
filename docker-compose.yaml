@@ -30,8 +30,7 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
-    networks:
-      - elastic
+      - migrations
 
   migrations:
     build:
@@ -44,8 +43,6 @@ services:
 #        condition: service_started
       pgdb:
         condition: service_healthy
-    networks:
-      - elastic
     command: python manage.py migrate
 
   createuser:
@@ -82,12 +79,7 @@ services:
       timeout: 5s
       retries: 15
 
-
 volumes:
   pgdbdata:
   database:
   frontend:
-
-networks:
-  elastic:
-    driver: bridge
