@@ -31,8 +31,6 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
-    networks:
-      - net
 
   migrations:
     build:
@@ -83,12 +81,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 15
-    networks:
-      - net
 
 volumes:
   pgdbdata:
   database:
   frontend:
-  net:
-    driver: bridge

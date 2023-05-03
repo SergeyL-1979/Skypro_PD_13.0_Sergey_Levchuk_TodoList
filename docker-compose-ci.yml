@@ -30,8 +30,6 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
-    networks:
-      - net
 
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -80,12 +78,9 @@ services:
       interval: 5s
       timeout: 5s
       retries: 15
-    networks:
-      - net
 
 volumes:
   pgdbdata:
   database:
   frontend:
-  net:
-    driver: bridge
+
