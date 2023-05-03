@@ -29,7 +29,6 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
-      - migrations
 
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID

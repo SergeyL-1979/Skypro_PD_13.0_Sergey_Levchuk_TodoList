@@ -30,7 +30,6 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
-      - migrations
 
   migrations:
     build:
