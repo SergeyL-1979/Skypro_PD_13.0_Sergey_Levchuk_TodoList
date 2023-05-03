@@ -90,4 +90,4 @@ volumes:
   database:
   frontend:
   net:
-    driver: bridge
+    driver: local
