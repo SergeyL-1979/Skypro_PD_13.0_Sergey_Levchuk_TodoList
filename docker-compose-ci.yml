@@ -30,6 +30,8 @@ services:
     # Зависимость от другого сервиса
     depends_on:
       - pgdb
+    networks:
+      - net
 
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -42,8 +44,7 @@ services:
         condition: service_started
       pgdb:
         condition: service_healthy
-    networks:
-      - net
+
     command: python manage.py migrate
 
   createuser:
@@ -87,4 +88,4 @@ volumes:
   database:
   frontend:
   net:
-    driver: local
+    driver: bridge
