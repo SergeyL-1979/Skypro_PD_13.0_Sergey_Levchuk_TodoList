@@ -71,13 +71,14 @@ services:
       POSTGRES_DB: ${SQL_DB_NAME}
       POSTGRES_USER: ${SQL_DB_USER}
       POSTGRES_PASSWORD: ${SQL_DB_PASSWORD}
+      PGDATA: /var/lib/postgresql/data
     restart: always
      # Задание имени контейнера для сервиса pgdb
     container_name: pgdb
      # Связывание тома с директорией в контейнере для сохранения данных postgres
     volumes:
 #      - pgdbdata:/var/lib/postgresql/data/
-      - ./postgres-data:/var/lib/postgresql/data
+      - ./pgdbdata:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${SQL_DB_USER} -d ${SQL_DB_NAME}"]
       interval: 5s
@@ -86,6 +87,6 @@ services:
 
 volumes:
   pgdbdata:
-#    driver: bridge
+    driver: local
   database:
   frontend:
