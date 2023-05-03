@@ -15,7 +15,7 @@ services:
     # Задание имени контейнера для сервиса django
     container_name: api
     # Задание команды, которую нужно запустить при запуске контейнера для сервиса django
-    command: python manage.py migrate | python manage.py runserver 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
@@ -31,18 +31,18 @@ services:
     depends_on:
       - pgdb
 
-#  migrations:
-#    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-#    container_name: migrations
-##    environment:
-##      POSTGRES_HOST: pgdb
-##      POSTGRES_PORT: 5432
-#    depends_on:
-##      api:
-##        condition: service_started
-#      pgdb:
-#        condition: service_healthy
-#    command: python manage.py migrate
+  migrations:
+    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    container_name: migrations
+    environment:
+      POSTGRES_HOST: pgdb
+      POSTGRES_PORT: 5432
+    depends_on:
+#      api:
+#        condition: service_started
+      pgdb:
+        condition: service_healthy
+    command: python manage.py migrate
 
   createuser:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
@@ -79,5 +79,6 @@ services:
 
 volumes:
   pgdbdata:
+    driver: bridge
   database:
   frontend:
