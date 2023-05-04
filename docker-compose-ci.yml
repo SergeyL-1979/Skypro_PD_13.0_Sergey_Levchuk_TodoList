@@ -15,7 +15,7 @@ services:
     # Задание имени контейнера для сервиса django
     container_name: api
     # Задание команды, которую нужно запустить при запуске контейнера для сервиса django
-    command: python manage.py runserver 0.0.0.0:8000
+#    command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
@@ -33,24 +33,28 @@ services:
     depends_on:
       pgdb:
         condition: service_healthy
-
-  migrations:
-    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-    container_name: migrations
-    environment:
-      SQL_DB_HOST: pgdb
-      SQL_DB_PORT: 5432
-      SQL_DB_NAME: ${SQL_DB_NAME}
-      SQL_DB_USER: ${SQL_DB_USER}
-      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
-    depends_on:
-      api:
-        condition: service_started
-      pgdb:
-        condition: service_healthy
     command: >
-      /bin/bash -c "python manage.py migrate"
-      /bin/bash -c "python manage.py shell 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')'"
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+
+#  migrations:
+#    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+#    container_name: migrations
+#    environment:
+#      SQL_DB_HOST: pgdb
+#      SQL_DB_PORT: 5432
+#      SQL_DB_NAME: ${SQL_DB_NAME}
+#      SQL_DB_USER: ${SQL_DB_USER}
+#      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+#    depends_on:
+#      api:
+#        condition: service_started
+#      pgdb:
+#        condition: service_healthy
+#    command: >
+#      /bin/bash -c "python manage.py migrate"
+#      /bin/bash -c "python manage.py shell 'from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')'"
 
   pgdb:
     # Использование готового образа postgres
