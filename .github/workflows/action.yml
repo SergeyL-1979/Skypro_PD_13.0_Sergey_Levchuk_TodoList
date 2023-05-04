@@ -68,4 +68,3 @@ jobs:
             whoami
             cd deploy
             echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
-            cat ${{secrets.SUPERUSER_USERNAME}} ${{secrets.SUPERUSER_EMAIL}} ${{secrets.SUPERUSER_PASSWORD}} | envsubst > sudo test.txt
