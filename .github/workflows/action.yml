@@ -29,14 +29,14 @@ jobs:
       SQL_DB_NAME: ${{secrets.SQL_DB_NAME}}
       SQL_DB_USER: ${{secrets.SQL_DB_USER}}
       SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
-#      SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
-#      SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
-#      SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
+      SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
+      SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
+      SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
     steps:
-      - name: Checkout
+      - name: Clone Code
         uses: actions/checkout@v3.5.2
 
-      - name: Render config
+      - name: Render configs
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
