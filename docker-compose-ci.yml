@@ -77,8 +77,10 @@ services:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     container_name: superuser
     depends_on:
-      api:
-        condition: service_started
+#      api:
+#        condition: service_started
+      migrations:
+        condition: service_healthy
 #    command:
 #      python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
     command:

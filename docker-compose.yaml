@@ -80,6 +80,8 @@ services:
       context: .
     container_name: superuser
     depends_on:
+#      api:
+#        condition: service_started
       migrations:
         condition: service_healthy
     command:
