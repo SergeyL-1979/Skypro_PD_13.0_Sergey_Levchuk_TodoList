@@ -40,8 +40,8 @@ jobs:
       - name: Render configs
         run: |-
           mkdir deploy
-          cat docker-compose-ci.yml | envsubst > deploy/docker-compose-1.yaml
-          cat docker_ci_env | envsubst > deploy/.env
+          cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
+          cat .docker_ci_env | envsubst > deploy/1.env
 
       # ========= BEGIN SSH EXIT ==========
       - name: Clone files to server
