@@ -67,6 +67,8 @@ MIDDLEWARE = [
 # ==== Настройки CORS ====================
 CORS_ALLOW_ALL_ORIGINS = True
 
+CSRF_TRUSTED_ORIGINS = ['http://51.250.67.65/']
+
 ROOT_URLCONF = 'todolist.urls'
 
 TEMPLATES = [
