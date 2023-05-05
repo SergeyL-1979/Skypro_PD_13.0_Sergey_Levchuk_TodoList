@@ -45,6 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'social_django',
     # ===== My Apps =====
     'core.apps.CoreConfig',
     # ====================
@@ -53,12 +56,16 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+# ==== Настройки CORS ====================
+CORS_ALLOW_ALL_ORIGINS = True
 
 ROOT_URLCONF = 'todolist.urls'
 
@@ -166,8 +173,8 @@ AUTHENTICATION_BACKENDS = [
 # SOCIAL_AUTH_POSTGRES_JSONFIELD = True
 SOCIAL_AUTH_POSTGRES_ENABLED = True
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'photos', 'notify']
-# SOCIAL_AUTH_JSONFIELD_ENABLED = True
-# SOCIAL_AUTH_URL_NAMESPACE = "social"
+SOCIAL_AUTH_JSONFIELD_ENABLED = True
+SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.social_details",
     "social_core.pipeline.social_auth.social_uid",
@@ -184,3 +191,5 @@ SOCIAL_AUTH_VK_OAUTH2_SECRET = os.environ.get("SOCIAL_AUTH_VK_OAUTH2_SECRET")
 
 SOCIAL_AUTH_LOGIN_REDIRECT_URL = "/logged-in/"
 SOCIAL_AUTH_LOGIN_ERROR_URL = "/login-error/"
+
+BOT_TOKEN = os.environ.get("BOT_TOKEN")
