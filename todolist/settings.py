@@ -72,9 +72,9 @@ CORS_ALLOW_ALL_ORIGINS = True
 #     'https://51.250.67.65',
 #     'http://localhost:8000',
 # ]
-CSRF_TRUSTED_ORIGINS = ["https://*", "http://*", ]
+# CSRF_TRUSTED_ORIGINS = ["https://*", "http://*", ]
 
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https', 'http')
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https', 'http')
 
 ROOT_URLCONF = 'todolist.urls'
 
