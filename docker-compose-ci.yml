@@ -57,8 +57,11 @@ services:
         condition: service_healthy
 #    command: python manage.py migrate
     command:
-      - /bin/bash -c "python manage.py migrate
-      - python manage.py. createsuperuser --no-input; exit 0"
+      - /bin/bash
+      - -c
+      - python manage.py migrate
+      - |
+      - python manage.py. createsuperuser --no-input; exit 0
 
   pgdb:
     # Использование готового образа postgres
