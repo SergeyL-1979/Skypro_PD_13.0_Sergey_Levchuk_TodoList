@@ -39,10 +39,8 @@ services:
     build: .
     container_name: migrations
     command: >
-      /bin/sh -c "python3 manage.py makemigrations --force-color --no-input -v 3
-      && python3 manage.py makemigrations --merge --no-input -v 3
-      && python3 manage.py migrate --force-color -v 3
-      && python3 manage.py createsuperuser --noinput; exit 0"
+      /bin/sh -c "python manage.py migrate --force-color -v 3
+      && python manage.py createsuperuser --noinput; exit 0"
     environment:
       #      SQL_DB_HOST: pgdb
       #      SQL_DB_PORT: 5432
