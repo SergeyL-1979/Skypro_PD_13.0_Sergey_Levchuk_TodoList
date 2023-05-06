@@ -8,7 +8,7 @@ from django.dispatch import receiver
 # Create your models here.
 class User(AbstractUser):
     birth_date = models.DateField(null=True, blank=True)
-    image = models.ImageField(_('image'), upload_to="img_users")
+    image = models.ImageField(_('image'), upload_to="img_users", null=True, blank=True)
 
     def image_(self):
         if self.image:
