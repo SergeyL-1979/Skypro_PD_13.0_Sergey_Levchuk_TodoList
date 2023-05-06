@@ -33,38 +33,22 @@ services:
     depends_on:
       pgdb:
         condition: service_healthy
-      migrations:
-        condition: service_completed_successfully
 
   migrations:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     container_name: migrations
-    command: >
-      /bin/sh -c "python manage.py migrate --force-color -v 3
-      && python manage.py createsuperuser --noinput; exit 0"
     environment:
-#      SQL_DB_HOST: pgdb
-#      SQL_DB_PORT: 5432
-#      SQL_DB_NAME: ${SQL_DB_NAME}
-#      SQL_DB_USER: ${SQL_DB_USER}
-#      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
-      - DJANGO_SUPERUSER_USERNAME=admin
-      - DJANGO_SUPERUSER_PASSWORD=admin
-      - DJANGO_SUPERUSER_EMAIL=admin@example.com
-    volumes:
-      - .:/app
-#    depends_on:
-##      api:
-##        condition: service_started
-#      pgdb:
-#        condition: service_healthy
-##    command: python manage.py migrate
-#    command:
-#      - /bin/bash
-#      - -c
-#      - python manage.py migrate
-#      - |
-#      - python manage.py. createsuperuser --no-input; exit 0
+      SQL_DB_HOST: pgdb
+      SQL_DB_PORT: 5432
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+    depends_on:
+      api:
+        condition: service_started
+      pgdb:
+        condition: service_healthy
+    command: python manage.py migrate
 
   pgdb:
     # Использование готового образа postgres
@@ -88,20 +72,21 @@ services:
       timeout: 5s
       retries: 15
 
-#  createuser:
-#    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-#    container_name: superuser
-#    depends_on:
-##      api:
-##        condition: service_started
-#      - pgdb
-##    command: >
-##      python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
+  createuser:
+    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    container_name: superuser
+    depends_on:
+#      api:
+#        condition: service_started
+      migrations:
+        condition: service_started
 #    command:
-#      - sh
-#      - -c
-#      - |
-#      - python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${DJANGO_SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
+#      python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
+    command:
+      - /bin/bash
+      - -c
+      - |
+      - python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
 
 volumes:
