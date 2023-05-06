@@ -66,12 +66,12 @@ MIDDLEWARE = [
 
 # ==== Настройки CORS ====================
 CORS_ALLOW_ALL_ORIGINS = True
-# CORS_ALLOWED_ORIGINS = [
-#     "http://localhost:8000",
-# ]
-# CORS_ORIGIN_WHITELIST = ['*']
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8000",
+    "http://51.250.67.65/",
+]
 
-CSRF_TRUSTED_ORIGINS = ['*']
+CSRF_TRUSTED_ORIGINS = ['http://51.250.67.65/']
 
 ROOT_URLCONF = 'todolist.urls'
 
