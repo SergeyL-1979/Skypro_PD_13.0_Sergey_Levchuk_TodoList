@@ -1,4 +1,5 @@
 from django.contrib.auth import login, logout
+from django.shortcuts import redirect
 from rest_framework import permissions
 from rest_framework.generics import (
     CreateAPIView,
@@ -53,7 +54,8 @@ class ProfileView(RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         logout(request)
-        return Response({})
+        # return Response({})
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 class UpdatePasswordView(UpdateAPIView):
