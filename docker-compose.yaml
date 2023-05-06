@@ -36,29 +36,36 @@ services:
         condition: service_healthy
 
   migrations:
-    build:
-      context: .
+    build: .
     container_name: migrations
-#    volumes:
-#      - .:/app
-    environment:
-      SQL_DB_HOST: pgdb
-      SQL_DB_PORT: 5432
-      SQL_DB_NAME: ${SQL_DB_NAME}
-      SQL_DB_USER: ${SQL_DB_USER}
-      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
-      DJANGO_SUPERUSER_USERNAME: ${SUPERUSER_USERNAME}
-      DJANGO_SUPERUSER_EMAIL: ${SUPERUSER_EMAIL}
-      DJANGO_SUPERUSER_PASSWORD: ${SUPERUSER_PASSWORD}
-    depends_on:
-      api:
-        condition: service_started
-      pgdb:
-        condition: service_healthy
-#    command: python manage.py migrate
     command: >
-      /bin/bash -c "python manage.py migrate
-      && python manage.py. createsuperuser --noinput; exit 0"
+      /bin/sh -c "python3 manage.py makemigrations --force-color --no-input -v 3
+      && python3 manage.py makemigrations --merge --no-input -v 3
+      && python3 manage.py migrate --force-color -v 3
+      && python3 manage.py createsuperuser --noinput; exit 0"
+    environment:
+      #      SQL_DB_HOST: pgdb
+      #      SQL_DB_PORT: 5432
+      #      SQL_DB_NAME: ${SQL_DB_NAME}
+      #      SQL_DB_USER: ${SQL_DB_USER}
+      #      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+#      DJANGO_SUPERUSER_USERNAME: ${SUPERUSER_USERNAME}
+#      DJANGO_SUPERUSER_EMAIL: ${SUPERUSER_EMAIL}
+#      DJANGO_SUPERUSER_PASSWORD: ${SUPERUSER_PASSWORD}
+      - DJANGO_SUPERUSER_USERNAME=admin
+      - DJANGO_SUPERUSER_PASSWORD=admin
+      - DJANGO_SUPERUSER_EMAIL=admin@example.com
+    volumes:
+      - .:/app
+#    depends_on:
+#      api:
+#        condition: service_started
+#      pgdb:
+#        condition: service_healthy
+##    command: python manage.py migrate
+#    command: >
+#      /bin/bash -c "python manage.py migrate
+#      && python manage.py. createsuperuser --noinput; exit 0"
 
   pgdb:
     # Использование готового образа postgres
