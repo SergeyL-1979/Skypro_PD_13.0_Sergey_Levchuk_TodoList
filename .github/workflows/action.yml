@@ -30,9 +30,9 @@ jobs:
       SQL_DB_USER: ${{secrets.SQL_DB_USER}}
       SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
-#      SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
-#      SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
-#      SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
+      DJANGO_SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
+      DJANGO_SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
+      DJANGO_SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
     steps:
       - name: Clone Code
         uses: actions/checkout@v3.5.2

@@ -39,8 +39,8 @@ services:
     build:
       context: .
     container_name: migrations
-    volumes:
-      - .:/app
+#    volumes:
+#      - .:/app
     environment:
       SQL_DB_HOST: ${SQL_DB_HOST}
       SQL_DB_PORT: ${SQL_DB_PORT}
