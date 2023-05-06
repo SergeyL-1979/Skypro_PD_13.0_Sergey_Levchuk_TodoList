@@ -73,7 +73,7 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 CSRF_TRUSTED_ORIGINS = [
     'http://51.250.67.65/',
-    'http://51.250.67.65/profile',
+    'http://51.250.67.65/api/core/profile',
 ]
 
 ROOT_URLCONF = 'todolist.urls'
