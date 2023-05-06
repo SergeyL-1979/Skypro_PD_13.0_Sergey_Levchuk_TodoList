@@ -54,7 +54,8 @@ class ProfileView(RetrieveUpdateDestroyAPIView):
 
     def delete(self, request, *args, **kwargs):
         logout(request)
-        return redirect('/')
+        # return Response({})
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
 class UpdatePasswordView(UpdateAPIView):
