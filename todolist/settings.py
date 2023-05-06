@@ -66,7 +66,7 @@ MIDDLEWARE = [
 
 # ==== Настройки CORS ====================
 CORS_ALLOW_ALL_ORIGINS = True
-CORS_ORIGIN_WHITELIST = ['http://51.250.67.65/']
+CORS_ORIGIN_WHITELIST = ['*']
 
 CSRF_TRUSTED_ORIGINS = ['http://51.250.67.65/']
 
