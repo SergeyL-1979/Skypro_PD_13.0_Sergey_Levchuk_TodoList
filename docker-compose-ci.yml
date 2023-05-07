@@ -29,8 +29,8 @@ services:
       SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
       SECRET_KEY: ${SECRET_KEY}
       DEBUG: ${DEBUG}
-      SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
-      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
+#      SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
+#      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
     # Зависимость от другого сервиса
     depends_on:
       pgdb:
@@ -89,7 +89,7 @@ services:
 #      - -c
 #      - |
 #      - python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${DJANGO_SUPERUSER_USERNAME}', '${DJANGO_SUPERUSER_EMAIL}', '${DJANGO_SUPERUSER_PASSWORD}')"
-# SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
+
 
 volumes:
   pgdb_data:
