@@ -30,6 +30,7 @@ jobs:
       SQL_DB_USER: ${{secrets.SQL_DB_USER}}
       SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
+      DEBUG: ${{secrets.DEBUG}}
       DJANGO_SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
       DJANGO_SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
       DJANGO_SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
