@@ -75,6 +75,7 @@ services:
       retries: 15
 
   createuser:
+    # Сборка для создания администратора при запуске базы
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: superuser
     entrypoint: ''
