@@ -82,6 +82,12 @@ services:
     container_name: superuser
 #    env_file: .env
     entrypoint: ''
+    environment:
+      SQL_DB_HOST: pgdb
+      SQL_DB_PORT: 5432
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
     volumes:
       - create_user:/usr/src/app
 #    depends_on:
