@@ -80,7 +80,6 @@ services:
   createuser:
     build: .
     container_name: superuser
-#    env_file: .env
     entrypoint: ''
     environment:
       SQL_DB_HOST: pgdb
@@ -90,12 +89,12 @@ services:
       SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
     volumes:
       - create_user:/usr/src/app
-#    depends_on:
-#      api:
-#        condition: service_started
+    depends_on:
+      pgdb:
+        condition: service_started
 #      migrations:
 #        condition: service_started
-    command: python3 manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
+    command: python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
 
 volumes:
