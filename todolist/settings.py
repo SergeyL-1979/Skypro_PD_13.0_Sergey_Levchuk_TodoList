@@ -102,7 +102,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',  # Добавил эту строку
-                # 'social_django.context_processors.login_redirect',  # Добавил эту строку
+                'social_django.context_processors.login_redirect',  # Добавил эту строку
             ],
         },
     },
@@ -182,7 +182,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE_ID = 1
 
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
 
 AUTH_USER_MODEL = 'core.User'
 
