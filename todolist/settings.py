@@ -72,20 +72,20 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
 ]
 # ========== ========== ==========
-CORS_ALLOW_METHODS = [
-    "DELETE",
-    "GET",
-    "OPTIONS",
-    "PATCH",
-    "POST",
-    "PUT",
-]
-CORS_ALLOWED_ORIGINS = [
-    'http://51.250.67.65',
-    'http://localhost:8000',
-]
-CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
-CORS_ALLOW_CREDENTIALS = True
+# CORS_ALLOW_METHODS = [
+#     "DELETE",
+#     "GET",
+#     "OPTIONS",
+#     "PATCH",
+#     "POST",
+#     "PUT",
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://51.250.67.65',
+#     'http://localhost:8000',
+# ]
+# CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+# CORS_ALLOW_CREDENTIALS = True
 # ========== ============ ==============
 
 ROOT_URLCONF = 'todolist.urls'
