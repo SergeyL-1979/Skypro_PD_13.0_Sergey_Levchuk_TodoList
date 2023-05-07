@@ -80,7 +80,7 @@ services:
   createuser:
     build: .
     container_name: superuser
-    env_file: .env
+#    env_file: .env
     entrypoint: ''
     volumes:
       - create_user:/app

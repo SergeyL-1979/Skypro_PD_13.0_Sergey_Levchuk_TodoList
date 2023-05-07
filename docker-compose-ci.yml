@@ -77,7 +77,7 @@ services:
   createuser:
     image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
     container_name: superuser
-    env_file: .env
+#    env_file: .env
     entrypoint: ''
     volumes:
       - create_user:/app
