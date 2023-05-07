@@ -180,7 +180,7 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.vk.VKOAuth2',  # бекенд авторизации через ВКонтакте
 ]
 
-SOCIAL_AUTH_POSTGRES_JSONFIELD = True  # Before
+# SOCIAL_AUTH_POSTGRES_JSONFIELD = True  # Before
 SOCIAL_AUTH_JSONFIELD_ENABLED = True  # After
 
 SOCIAL_AUTH_POSTGRES_ENABLED = True
