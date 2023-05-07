@@ -4,6 +4,7 @@ from rest_framework.generics import (
     CreateAPIView,
     GenericAPIView,
     RetrieveUpdateDestroyAPIView,
+    RetrieveUpdateAPIView,
     UpdateAPIView,
 )
 from rest_framework.response import Response
@@ -56,7 +57,7 @@ class ProfileView(RetrieveUpdateDestroyAPIView):
         return Response({})
 
 
-class UpdatePasswordView(UpdateAPIView):
+class UpdatePasswordView(RetrieveUpdateAPIView):
     model = User
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = UpdatePasswordSerializer
