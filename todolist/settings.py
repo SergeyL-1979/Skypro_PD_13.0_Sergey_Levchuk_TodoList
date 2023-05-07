@@ -88,6 +88,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # Добавил эту строку
+                'social_django.context_processors.login_redirect',  # Добавил эту строку
             ],
         },
     },
@@ -178,10 +180,12 @@ AUTHENTICATION_BACKENDS = [
     'social_core.backends.vk.VKOAuth2',  # бекенд авторизации через ВКонтакте
 ]
 
-# SOCIAL_AUTH_POSTGRES_JSONFIELD = True
+SOCIAL_AUTH_POSTGRES_JSONFIELD = True  # Before
+SOCIAL_AUTH_JSONFIELD_ENABLED = True  # After
+
 SOCIAL_AUTH_POSTGRES_ENABLED = True
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email', 'photos', 'notify']
-SOCIAL_AUTH_JSONFIELD_ENABLED = True
+
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_PIPELINE = (
     "social_core.pipeline.social_auth.social_details",
