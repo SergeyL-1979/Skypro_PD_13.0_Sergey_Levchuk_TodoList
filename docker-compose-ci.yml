@@ -74,23 +74,22 @@ services:
       timeout: 5s
       retries: 15
 
-#  createuser:
-#    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
-#    container_name: superuser
+  createuser:
+    image: sergdef/todolist_skypro:$GITHUB_REF_NAME-$GITHUB_RUN_ID
+    container_name: superuser
+    env_file: .env
+    entrypoint: ''
+    volumes:
+      - create_user:/app
 #    depends_on:
-##      api:
-##        condition: service_started
+#      api:
+#        condition: service_started
 #      migrations:
 #        condition: service_started
-##    command:
-##      python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${DJANGO_SUPERUSER_USERNAME}', '${DJANGO_SUPERUSER_EMAIL}', '${DJANGO_SUPERUSER_PASSWORD}')"
-#    command:
-#      - /bin/bash
-#      - -c
-#      - |
-#      - python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${DJANGO_SUPERUSER_USERNAME}', '${DJANGO_SUPERUSER_EMAIL}', '${DJANGO_SUPERUSER_PASSWORD}')"
+    command: python3 manage.py shell -c --no-input "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
 
 volumes:
   pgdb_data:
   frontend:
+  create_user:
