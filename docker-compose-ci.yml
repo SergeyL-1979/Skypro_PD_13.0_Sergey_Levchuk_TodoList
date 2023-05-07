@@ -37,7 +37,7 @@ services:
         condition: service_healthy
 
   migrations:
-    image: sergdef/todolist_skypro:${GITHUB_REF_NAME-$GITHUB_RUN_ID}
+    image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: migrations
     environment:
       SQL_DB_HOST: pgdb
@@ -75,7 +75,7 @@ services:
       retries: 15
 
   createuser:
-    image: sergdef/todolist_skypro:${GITHUB_REF_NAME-$GITHUB_RUN_ID}
+    image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: superuser
     entrypoint: ''
     environment:
