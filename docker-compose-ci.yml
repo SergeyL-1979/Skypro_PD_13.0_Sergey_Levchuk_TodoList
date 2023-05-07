@@ -80,7 +80,7 @@ services:
 #    env_file: .env
     entrypoint: ''
     volumes:
-      - create_user:/app
+      - create_user:/usr/src/app
 #    depends_on:
 #      api:
 #        condition: service_started
