@@ -55,3 +55,8 @@ Pycharm может предложить вам сделать это после 
 ```python
     python manage.py runserver
 ```
+
+## Для создания super_user на сервере выполните команду из директории, где расположен docker-compose.yaml
+```python
+     docker exec -it <имя контейнера приложения> python ./manage.py createsuperuser
+```
