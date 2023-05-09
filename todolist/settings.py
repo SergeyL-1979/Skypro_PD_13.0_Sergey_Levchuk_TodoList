@@ -54,7 +54,7 @@ INSTALLED_APPS = [
     'django_filters',
     # ===== My Apps =====
     'core.apps.CoreConfig',
-    'goals.apps.GoalsConfig',
+    # 'goals.apps.GoalsConfig',
     # ====================
     # ==== Подключаем OpenAPI ====
     'drf_spectacular',
