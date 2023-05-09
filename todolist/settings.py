@@ -30,11 +30,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = bool(int(os.environ.get('DEBUG', default=1)))
 
-DEBUG = int(os.environ.get('DEBUG', default=0))
-
-ALLOWED_HOSTS = ["*"]
-# ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
+# ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ")
 
 
 # Application definition
@@ -45,13 +44,19 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # ===== CORS ======
     'corsheaders',
+    # ===== DRF ========
     'rest_framework',
+    # === Авторизация через социальные сети ===
     'social_django',
+    # ===== Фильтры django-filter ====
+    'django_filters',
     # ===== My Apps =====
     'core.apps.CoreConfig',
+    'goals.apps.GoalsConfig',
     # ====================
-    # Подключаем OpenAPI
+    # ==== Подключаем OpenAPI ====
     'drf_spectacular',
 ]
 
@@ -224,6 +229,9 @@ BOT_TOKEN = os.environ.get("BOT_TOKEN")
 
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
 }
 
 SPECTACULAR_SETTINGS = {
@@ -231,16 +239,6 @@ SPECTACULAR_SETTINGS = {
     'DESCRIPTION': 'TODO List API',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
-    'SERVERS': [{'url': 'HTTP'}],
-
-    # OTHER SETTINGS
-    # Oauth2 related settings. used for example by django-oauth2-toolkit.
-    # https://spec.openapis.org/oas/v3.0.3#oauthFlowsObject
-    'OAUTH2_FLOWS': [],
-    'OAUTH2_AUTHORIZATION_URL': None,
-    'OAUTH2_TOKEN_URL': None,
-    'OAUTH2_REFRESH_URL': None,
-    'OAUTH2_SCOPES': None,
 }
 
 # SIMPLE_JWT = {

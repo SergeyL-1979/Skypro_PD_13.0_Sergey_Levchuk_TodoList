@@ -24,8 +24,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('oauth/', include('social_django.urls', namespace="social")),
     path('core/', include('core.urls')),
+    path("goals/", include("goals.urls")),
 
     # === API Document ===
+    path('api/', include('rest_framework.urls')),
     # YOUR PATTERNS
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
