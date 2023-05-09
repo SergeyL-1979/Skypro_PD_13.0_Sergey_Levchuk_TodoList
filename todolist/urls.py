@@ -27,7 +27,7 @@ urlpatterns = [
     # path("goals/", include("goals.urls")),
 
     # === API Document ===
-    path('api/', include('rest_framework.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace="rest_framework")),
     # YOUR PATTERNS
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     # Optional UI:
