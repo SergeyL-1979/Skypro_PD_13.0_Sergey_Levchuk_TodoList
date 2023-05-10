@@ -24,7 +24,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('oauth/', include('social_django.urls', namespace="social")),
     path('core/', include('core.urls')),
-    # path("goals/", include("goals.urls")),
+    path("goals/", include("goals.urls")),
 
     # === API Document ===
     path('api-auth/', include('rest_framework.urls', namespace="rest_framework")),
