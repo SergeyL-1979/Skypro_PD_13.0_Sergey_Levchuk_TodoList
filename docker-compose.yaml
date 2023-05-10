@@ -3,7 +3,7 @@ version: '3.9'
 
 services:
   frontend:
-    image: sermalenk/skypro-front:lesson-34
+    image: sermalenk/skypro-front:lesson-36
     container_name: frontend
     ports:
       - "80:80"
@@ -89,11 +89,11 @@ services:
       SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
     volumes:
       - create_user:/usr/src/app
-#    depends_on:
-#      pgdb:
-#        condition: service_started
+    depends_on:
 #      migrations:
 #        condition: service_started
+      migrations:
+        condition: service_completed_successfully
     command: python manage.py shell -c "from django.contrib.auth import get_user_model; User = get_user_model(); User.objects.create_superuser('${SUPERUSER_USERNAME}', '${SUPERUSER_EMAIL}', '${SUPERUSER_PASSWORD}')"
 
 
