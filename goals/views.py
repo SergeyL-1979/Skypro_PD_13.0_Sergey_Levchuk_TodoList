@@ -12,14 +12,14 @@ from goals.serializers import (GoalCreateSerializer, GoalCategorySerializer,
 
 
 class GoalCategoryCreateView(CreateAPIView):
-    """  """
+    """ Модель представления, которая позволяет создать Category в заметках """
     model = GoalCategory
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategoryCreateSerializer
 
 
 class GoalCategoryListView(ListAPIView):
-    """  """
+    """ Модель представления, которая позволяет просматривать все объекты Category """
     model = GoalCategory
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategorySerializer
@@ -37,7 +37,7 @@ class GoalCategoryListView(ListAPIView):
 
 
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
-    """ """
+    """ Модель представления, которая позволяет редактировать и удалять объекты из Category """
     model = GoalCategory
     serializer_class = GoalCategorySerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -52,14 +52,17 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
 
 
 class GoalCreateView(CreateAPIView):
-    """ """
+    """ Модель представления, которая позволяет создавать объект Goal """
     model = Goal
     serializer_class = GoalCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
 class GoalListView(ListAPIView):
-    """  """
+    """
+    Модель представления, которая позволяет выводить все объекты Goal.
+    Сортировать, фильтровать и искать по полям `title`, `description`
+    """
     model = Goal
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
@@ -79,7 +82,7 @@ class GoalListView(ListAPIView):
 
 
 class GoalView(RetrieveUpdateDestroyAPIView):
-    """  """
+    """ Модель представления, которая позволяет редактировать и удалять объекты Goal. """
     model = Goal
     serializer_class = GoalSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -94,14 +97,14 @@ class GoalView(RetrieveUpdateDestroyAPIView):
 
 
 class CommentCreateView(CreateAPIView):
-    """  """
+    """ Модель представления, которая позволяет создавать объекты Comment. """
     model = GoalComment
     serializer_class = CommentCreateSerializer
     permission_classes = [permissions.IsAuthenticated]
 
 
 class CommentView(RetrieveUpdateDestroyAPIView):
-    """  """
+    """ Модель представления, которая позволяет редактировать и удалять объекты Comment. """
     model = GoalComment
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
@@ -111,7 +114,10 @@ class CommentView(RetrieveUpdateDestroyAPIView):
 
 
 class CommentListView(ListAPIView):
-    """  """
+    """
+    Модель представления, которая позволяет выводить все объекты Comment.
+    Так же сортирую и делает фильтрацию по полю `goal`.
+    """
     model = GoalComment
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated]
