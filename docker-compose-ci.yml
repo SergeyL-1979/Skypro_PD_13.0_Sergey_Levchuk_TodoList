@@ -16,9 +16,11 @@ services:
     # Задание имени контейнера для сервиса django
     container_name: api
     # Задание команды, которую нужно запустить при запуске контейнера для сервиса django
-    command: python manage.py runserver 0.0.0.0:8000
+#    command: python manage.py runserver 0.0.0.0:8000
+    command: gunicorn todolist.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
+      - create_user:/app
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
