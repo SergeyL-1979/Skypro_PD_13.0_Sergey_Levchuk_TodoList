@@ -13,6 +13,8 @@ RUN pip install -r /usr/src/app/requirements.txt
 
 # Устанавливает рабочий каталог контейнера — "code"
 COPY . /usr/src/app
+# Копирование файла `.env` в контейнер
+COPY ./.env /usr/src/app
 WORKDIR /usr/src/app
 
 # Копирует все файлы из нашего локального проекта в контейнер
