@@ -70,7 +70,7 @@ class Goal(models.Model):
 
 
 class GoalComment(models.Model):
-    """  """
+    """ Модель создания объекта `comment` для модели заметок `goal` """
     goal = models.ForeignKey(Goal, verbose_name="Цель", related_name="goal_comments", on_delete=models.PROTECT)
     user = models.ForeignKey(User, verbose_name="Автор", related_name="goal_comments", on_delete=models.PROTECT)
     text = models.TextField(verbose_name="Текст")
