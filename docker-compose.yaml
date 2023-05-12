@@ -82,7 +82,7 @@ services:
       timeout: 5s
       retries: 15
 
-  superuser:
+  createuser:
     build: .
     container_name: superuser
     entrypoint: ''
