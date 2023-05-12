@@ -49,7 +49,7 @@ jobs:
       - name: Render configs
         run: |-
           mkdir deploy
-          cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml |
+          cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml && \
           cat .env.prod | envsubst > deploy/.env.prod
 
       # ========= BEGIN SSH EXIT ==========
