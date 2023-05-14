@@ -24,17 +24,16 @@ services:
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
-    env_file: .env.dev
-#    environment:
-#      SQL_DB_HOST: pgdb
-#      SQL_DB_PORT: 5432
-#      SQL_DB_NAME: ${SQL_DB_NAME}
-#      SQL_DB_USER: ${SQL_DB_USER}
-#      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
-#      SECRET_KEY: ${SECRET_KEY}
-#      DEBUG: ${DEBUG}
-#      SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
-#      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
+    environment:
+      SQL_DB_HOST: pgdb
+      SQL_DB_PORT: 5432
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+      SECRET_KEY: ${SECRET_KEY}
+      DEBUG: ${DEBUG}
+      SOCIAL_AUTH_VK_OAUTH2_KEY: ${SOCIAL_AUTH_VK_OAUTH2_KEY}
+      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${SOCIAL_AUTH_VK_OAUTH2_SECRET}
     #  Перезапуск всегда
     restart: always
     # Зависимость от другого сервиса
@@ -45,13 +44,12 @@ services:
   migrations:
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: migrations
-    env_file: .env.dev
-#    environment:
-#      SQL_DB_HOST: pgdb
-#      SQL_DB_PORT: 5432
-#      SQL_DB_NAME: ${SQL_DB_NAME}
-#      SQL_DB_USER: ${SQL_DB_USER}
-#      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+    environment:
+      SQL_DB_HOST: pgdb
+      SQL_DB_PORT: 5432
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
     depends_on:
       api:
         condition: service_started
@@ -86,13 +84,12 @@ services:
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: superuser
     entrypoint: ''
-    env_file: .env.dev
-#    environment:
-#      SQL_DB_HOST: pgdb
-#      SQL_DB_PORT: 5432
-#      SQL_DB_NAME: ${SQL_DB_NAME}
-#      SQL_DB_USER: ${SQL_DB_USER}
-#      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+    environment:
+      SQL_DB_HOST: pgdb
+      SQL_DB_PORT: 5432
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
     volumes:
       - create_user:/usr/src/app
     depends_on:
