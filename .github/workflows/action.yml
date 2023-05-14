@@ -48,7 +48,7 @@ jobs:
         run: |-
           mkdir deploy
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
-          cat .env | envsubst > deploy/.env.dev
+          cat .env.dev | envsubst > deploy/.env.dev
 
       # ========= BEGIN SSH EXIT ==========
       - name: Clone files to server
