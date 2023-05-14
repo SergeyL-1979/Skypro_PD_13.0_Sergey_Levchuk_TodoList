@@ -29,17 +29,17 @@ jobs:
   deploy:
     needs: build_and_push
     runs-on: ubuntu-20.04
-#    env:
-#      SQL_DB_NAME: ${{secrets.SQL_DB_NAME}}
-#      SQL_DB_USER: ${{secrets.SQL_DB_USER}}
-#      SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
-#      SECRET_KEY: ${{secrets.SECRET_KEY}}
-#      DEBUG: ${{secrets.DEBUG}}
-#      SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
-#      SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
-#      SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
-#      SOCIAL_AUTH_VK_OAUTH2_KEY: ${{secrets.SOCIAL_AUTH_VK_OAUTH2_KEY}}
-#      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${{secrets.SOCIAL_AUTH_VK_OAUTH2_SECRET}}
+    env:
+      SQL_DB_NAME: ${{secrets.SQL_DB_NAME}}
+      SQL_DB_USER: ${{secrets.SQL_DB_USER}}
+      SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
+      SECRET_KEY: ${{secrets.SECRET_KEY}}
+      DEBUG: ${{secrets.DEBUG}}
+      SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
+      SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
+      SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
+      SOCIAL_AUTH_VK_OAUTH2_KEY: ${{secrets.SOCIAL_AUTH_VK_OAUTH2_KEY}}
+      SOCIAL_AUTH_VK_OAUTH2_SECRET: ${{secrets.SOCIAL_AUTH_VK_OAUTH2_SECRET}}
     steps:
       - name: Clone Code
         uses: actions/checkout@v3.5.2
