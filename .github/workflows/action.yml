@@ -33,8 +33,8 @@ jobs:
       SQL_DB_NAME: ${{secrets.SQL_DB_NAME}}
       SQL_DB_USER: ${{secrets.SQL_DB_USER}}
       SQL_DB_PASSWORD: ${{secrets.SQL_DB_PASSWORD}}
-      SECRET_KEY: ${{secrets.SECRET_KEY}}
-      DEBUG: ${{secrets.DEBUG}}
+#      SECRET_KEY: ${{secrets.SECRET_KEY}}
+#      DEBUG: ${{secrets.DEBUG}}
       SUPERUSER_USERNAME: ${{secrets.SUPERUSER_USERNAME}}
       SUPERUSER_EMAIL: ${{secrets.SUPERUSER_EMAIL}}
       SUPERUSER_PASSWORD: ${{secrets.SUPERUSER_PASSWORD}}
@@ -47,8 +47,8 @@ jobs:
       - name: Render configs
         run: |-
           mkdir deploy
-          cat docker-compose-ci.yml | envsubst > deploy/docker1-compose.yaml
-          cat ./.env.prod | envsubst > deploy/.env.prod
+          cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
+          cat ./.env.dev | envsubst > deploy/.env
 
       # ========= BEGIN SSH EXIT ==========
       - name: Clone files to server
@@ -60,10 +60,10 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           # Указываем, какие файлы копировать
-          source: "deploy/docker1-compose.yaml"
+          source: "deploy/docker-compose.yaml, deploy/.env"
           target: "deploy"
           strip_components: 1
-#
+
 #      # ========== START DOCKER CONTAINER ==========
 #      - name: Executing remote SSH commands using PASSWORD
 #        uses: appleboy/ssh-action@v0.1.10
