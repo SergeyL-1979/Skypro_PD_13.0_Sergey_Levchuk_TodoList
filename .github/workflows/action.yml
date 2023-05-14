@@ -50,19 +50,19 @@ jobs:
           cat docker-compose-ci.yml | envsubst > deploy/docker1-compose.yaml
           cat ./.env.prod | envsubst > deploy/.env.prod
 
-#      # ========= BEGIN SSH EXIT ==========
-#      - name: Clone files to server
-#        uses: appleboy/scp-action@v0.1.4
-#        with:
-#          # Эти значения надо вписать в секреты гитхаба
-#          host: ${{ secrets.HOST }}
-#          port: ${{ secrets.PORT }}
-#          username: ${{ secrets.SSH_USERNAME }}
-#          password: ${{ secrets.SSH_PASSWORD }}
-#          # Указываем, какие файлы копировать
-#          source: "deploy/docker-compose.yaml"
-#          target: "deploy"
-#          strip_components: 1
+      # ========= BEGIN SSH EXIT ==========
+      - name: Clone files to server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          # Эти значения надо вписать в секреты гитхаба
+          host: ${{ secrets.HOST }}
+          port: ${{ secrets.PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          password: ${{ secrets.SSH_PASSWORD }}
+          # Указываем, какие файлы копировать
+          source: "deploy/docker-compose.yaml"
+          target: "deploy"
+          strip_components: 1
 #
 #      # ========== START DOCKER CONTAINER ==========
 #      - name: Executing remote SSH commands using PASSWORD
