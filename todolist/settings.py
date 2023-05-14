@@ -44,20 +44,21 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # ===== CORS ======
-    'corsheaders',
     # ===== DRF ========
     'rest_framework',
-    # === Авторизация через социальные сети ===
-    'social_django',
+    # ===== CORS ======
+    'corsheaders',
     # ===== Фильтры django-filter ====
     'django_filters',
+    # === Авторизация через социальные сети ===
+    'social_django',
+    # ==== Подключаем OpenAPI ====
+    # 'drf_spectacular',
+    'drf_yasg',
     # ===== My Apps =====
     'core.apps.CoreConfig',
     'goals.apps.GoalsConfig',
     # ====================
-    # ==== Подключаем OpenAPI ====
-    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -71,30 +72,6 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ==== Настройки CORS ====================
-CORS_ALLOW_ALL_ORIGINS = True
-
-CSRF_TRUSTED_ORIGINS = [
-    'http://51.250.67.65',
-    'https://51.250.67.65',
-    'http://localhost:8000',
-]
-# ========== ========== ==========
-# CORS_ALLOW_METHODS = [
-#     "DELETE",
-#     "GET",
-#     "OPTIONS",
-#     "PATCH",
-#     "POST",
-#     "PUT",
-# ]
-# CORS_ALLOWED_ORIGINS = [
-#     'http://51.250.67.65',
-#     'http://localhost:8000',
-# ]
-# CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
-# CORS_ALLOW_CREDENTIALS = True
-# ========== ============ ==============
 
 ROOT_URLCONF = 'todolist.urls'
 
@@ -188,6 +165,31 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "django_media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# ==== Настройки CORS ====================
+CORS_ALLOW_ALL_ORIGINS = True
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://51.250.67.65',
+    'https://51.250.67.65',
+    'http://localhost:8000',
+]
+# ========== ========== ==========
+# CORS_ALLOW_METHODS = [
+#     "DELETE",
+#     "GET",
+#     "OPTIONS",
+#     "PATCH",
+#     "POST",
+#     "PUT",
+# ]
+# CORS_ALLOWED_ORIGINS = [
+#     'http://51.250.67.65',
+#     'http://localhost:8000',
+# ]
+# CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
+# CORS_ALLOW_CREDENTIALS = True
+# ========== ============ ==============
+
 SITE_ID = 1
 
 # LOGIN_REDIRECT_URL = '/'
@@ -234,12 +236,12 @@ REST_FRAMEWORK = {
     ],
 }
 
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'To Do List Project API',
-    'DESCRIPTION': 'TODO List API',
-    'VERSION': '1.0.0',
-    'SERVE_INCLUDE_SCHEMA': False,
-}
+# SPECTACULAR_SETTINGS = {
+#     'TITLE': 'To Do List Project API',
+#     'DESCRIPTION': 'TODOList API',
+#     'VERSION': '1.0.0',
+#     'SERVE_INCLUDE_SCHEMA': False,
+# }
 
 # SIMPLE_JWT = {
 #     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),

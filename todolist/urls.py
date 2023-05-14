@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from todolist.yasg import urlpatterns as doc_urls
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -27,13 +28,15 @@ urlpatterns = [
     path("goals/", include("goals.urls")),
 
     # === API Document ===
-    path('api-auth/', include('rest_framework.urls', namespace="rest_framework")),
-    # YOUR PATTERNS
-    path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
-    # Optional UI:
-    path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
-    path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
+    path('accounts/', include('rest_framework.urls', namespace="rest_framework")),
+    # # ==== YOUR PATTERNS === drf_spectacular ===
+    # path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
+    # # Optional UI:
+    # path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    # path('api/schema/redoc/', SpectacularRedocView.as_view(url_name='schema'), name='redoc'),
 ]
+
+urlpatterns += doc_urls
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
