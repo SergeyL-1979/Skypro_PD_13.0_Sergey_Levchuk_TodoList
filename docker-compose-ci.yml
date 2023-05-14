@@ -15,7 +15,7 @@ services:
     # ======= Return STATIC =======
     volumes:
       - django_static:/usr/share/nginx/html/static/
-      - ./deploy_nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - nginx.conf:/etc/nginx/conf.d/default.conf
 
   api:
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
