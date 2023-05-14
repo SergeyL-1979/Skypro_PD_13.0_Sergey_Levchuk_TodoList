@@ -9,9 +9,9 @@ services:
     ports:
       - "80:80"
     depends_on:
-      collect_static:
-        condition: service_completed_successfully
-#      - api
+#      collect_static:
+#        condition: service_completed_successfully
+      - api
     # ======= Return STATIC =======
 #    volumes:
 #      - django_static:/usr/share/nginx/html/static/
@@ -118,4 +118,4 @@ volumes:
   pgdb_data:
   frontend:
   create_user:
-  django_static:
+#  django_static:
