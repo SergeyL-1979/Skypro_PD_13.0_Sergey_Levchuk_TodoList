@@ -47,42 +47,42 @@ jobs:
       - name: Render configs
         run: |-
           mkdir deploy
-          cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml && \
-          cat .env.prod | envsubst > deploy/.env.prod
+          cat docker-compose-ci.yml | envsubst > deploy/docker1-compose.yaml
+          cat ./.env.prod | envsubst > deploy/.env.prod
 
-      # ========= BEGIN SSH EXIT ==========
-      - name: Clone files to server
-        uses: appleboy/scp-action@v0.1.4
-        with:
-          # Эти значения надо вписать в секреты гитхаба
-          host: ${{ secrets.HOST }}
-          port: ${{ secrets.PORT }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          # Указываем, какие файлы копировать
-          source: "deploy/docker-compose.yaml"
-          target: "deploy"
-          strip_components: 1
-
-      # ========== START DOCKER CONTAINER ==========
-      - name: Executing remote SSH commands using PASSWORD
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          port: ${{ secrets.PORT }}
-          script: |-
-            whoami
-            cd deploy
-            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
-
-      # ========= REMOVING INACTIVE IMAGES ============
-      - name: Removing Images
-        uses: appleboy/ssh-action@v0.1.10
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          password: ${{ secrets.SSH_PASSWORD }}
-          script: |
-            docker system prune -a -f
+#      # ========= BEGIN SSH EXIT ==========
+#      - name: Clone files to server
+#        uses: appleboy/scp-action@v0.1.4
+#        with:
+#          # Эти значения надо вписать в секреты гитхаба
+#          host: ${{ secrets.HOST }}
+#          port: ${{ secrets.PORT }}
+#          username: ${{ secrets.SSH_USERNAME }}
+#          password: ${{ secrets.SSH_PASSWORD }}
+#          # Указываем, какие файлы копировать
+#          source: "deploy/docker-compose.yaml"
+#          target: "deploy"
+#          strip_components: 1
+#
+#      # ========== START DOCKER CONTAINER ==========
+#      - name: Executing remote SSH commands using PASSWORD
+#        uses: appleboy/ssh-action@v0.1.10
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.SSH_USERNAME }}
+#          password: ${{ secrets.SSH_PASSWORD }}
+#          port: ${{ secrets.PORT }}
+#          script: |-
+#            whoami
+#            cd deploy
+#            echo ${{ secrets.SSH_PASSWORD }} | sudo -S docker-compose up -d
+#
+#      # ========= REMOVING INACTIVE IMAGES ============
+#      - name: Removing Images
+#        uses: appleboy/ssh-action@v0.1.10
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.SSH_USERNAME }}
+#          password: ${{ secrets.SSH_PASSWORD }}
+#          script: |
+#            docker system prune -a -f
