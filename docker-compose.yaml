@@ -23,10 +23,6 @@ services:
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
-    # тест копирование `.env`
-#    env_file:
-#      .env
-    env_file: .env.dev
     environment:
       SQL_DB_HOST: pgdb
       SQL_DB_PORT: 5432
