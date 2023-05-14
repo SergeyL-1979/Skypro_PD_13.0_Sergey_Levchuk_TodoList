@@ -21,6 +21,8 @@ services:
     volumes:
       - .:/app
       - create_user:/app
+      - django_static:/app
+      - django_media:/app
     # Открытие порта на хостовой машине и перенаправление на порт в контейнере
     ports:
       - "8000:8000"
@@ -102,3 +104,5 @@ volumes:
   pgdb_data:
   frontend:
   create_user:
+  django_static:
+  django_media:
