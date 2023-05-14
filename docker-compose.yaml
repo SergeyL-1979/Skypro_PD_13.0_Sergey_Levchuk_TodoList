@@ -26,8 +26,7 @@ services:
     # тест копирование `.env`
 #    env_file:
 #      .env
-    env_file:
-      - ./.env
+    env_file: .env
     environment:
       SQL_DB_HOST: pgdb
       SQL_DB_PORT: 5432
