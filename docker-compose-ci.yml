@@ -54,9 +54,7 @@ services:
         condition: service_started
       pgdb:
         condition: service_healthy
-    command: >
-      python manage.py migrate
-      python manage.py collectstatic --no-input --clear
+    command: python manage.py migrate
 
   pgdb:
     # Использование готового образа postgres
