@@ -11,3 +11,4 @@
 !.env.dev
 !.env.prod
 !django_media
+!entrypoint.sh
