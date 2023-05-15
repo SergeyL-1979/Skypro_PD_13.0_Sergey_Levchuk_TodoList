@@ -20,7 +20,8 @@ WORKDIR /usr/src/app
 
 # |ВАЖНЫЙ МОМЕНТ| копируем содержимое папки, где находится Dockerfile, в рабочую директорию контейнера
 # если закоментировать то изменения в контейнере будут происходить срузу
-#COPY . /usr/src/app
+COPY . /usr/src/app
+ENTRYPOINT ["bash", "entrypoint.sh"]
 
 EXPOSE 8000
 
