@@ -60,4 +60,4 @@ Pycharm может предложить вам сделать это после 
 ```python
      docker exec -it <имя контейнера приложения> python ./manage.py createsuperuser --username=admin --email='admin@example.com'
 ```
-Далее придумываем пароль
+### Далее придумываем пароль
