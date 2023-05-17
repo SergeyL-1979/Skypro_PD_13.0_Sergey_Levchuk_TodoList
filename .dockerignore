@@ -12,3 +12,4 @@
 !.env.prod
 !django_media
 !entrypoint.sh
+!deploy_nginx/**
