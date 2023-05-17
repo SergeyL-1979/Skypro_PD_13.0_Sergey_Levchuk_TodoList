@@ -7,7 +7,7 @@ services:
     image: postgres:15.2
     # Задание переменных окружения для контейнера с postgres
     ports:
-      - "5433:5432"
+      - "5432:5432"
     environment:
       POSTGRES_DB: ${SQL_DB_NAME}
       POSTGRES_USER: ${SQL_DB_USER}
@@ -53,7 +53,7 @@ services:
     container_name: frontend
     restart: always
     ports:
-      - "88:80"
+      - "80:80"
     depends_on:
       api:
         condition: service_started
