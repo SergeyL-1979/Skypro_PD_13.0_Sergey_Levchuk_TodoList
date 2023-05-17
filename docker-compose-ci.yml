@@ -29,7 +29,7 @@ services:
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: api
     command: gunicorn todolist.wsgi:application --bind 0.0.0.0:8000
-#    env_file: .env.prod
+    env_file: .env.test
     environment:
       SQL_DB_HOST: pgdb
       SQL_DB_PORT: 5432
