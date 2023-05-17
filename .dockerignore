@@ -8,8 +8,9 @@
 !manage.py
 !requirements.txt
 !Dockerfile
-
-!/.env.prod
+!.env.dev
+!.env.prod
+!.env.test
 !django_media
 !entrypoint.sh
 !deploy_nginx/**
