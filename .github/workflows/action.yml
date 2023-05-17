@@ -46,7 +46,7 @@ jobs:
 
       - name: Render configs
         run: |-
-          mkdir deploy
+          mkdir deploy deploy_nginx
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
           cat ./deploy_nginx/nginx.conf | envsubst > deploy_nginx/nginx.conf
 
