@@ -48,7 +48,7 @@ jobs:
         run: |-
           mkdir deploy deploy_nginx
           cat docker-compose-ci.yml | envsubst > deploy/docker-compose.yaml
-          cat ./deploy_nginx/nginx.conf | envsubst > deploy_nginx/nginx.conf
+          cat ./deploy_nginx/nginx.conf | envsubst > deploy/nginx.conf
 
       # ========= BEGIN SSH EXIT ==========
       - name: Clone files to server
@@ -60,7 +60,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           password: ${{ secrets.SSH_PASSWORD }}
           # Указываем, какие файлы копировать
-          source: "deploy/docker-compose.yaml, deploy_nginx/nginx.conf"
+          source: "deploy/docker-compose.yaml, deploy/nginx.conf"
           target: "deploy"
           strip_components: 1
 
