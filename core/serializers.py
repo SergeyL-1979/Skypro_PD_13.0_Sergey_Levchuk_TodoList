@@ -3,17 +3,18 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
-from .models import User
+from core.models import User
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
+    """ Создаем пользователя """
     password = serializers.CharField(write_only=True, validators=[validate_password])
     password_repeat = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
         read_only_fields = ("id",)
-        fields = (
+        fields = [
             "id",
             "username",
             "first_name",
@@ -21,7 +22,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
             "email",
             "password",
             "password_repeat",
-        )
+        ]
 
     def validate(self, attrs: dict):
         password: str = attrs.get("password")
@@ -37,6 +38,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
+    """ Вход авторизованного пользователя """
     username = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
 
@@ -51,10 +53,11 @@ class LoginSerializer(serializers.Serializer):
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """ Вывод объекта пользователя """
     class Meta:
         model = User
         read_only_fields = ("id",)
-        fields = (
+        fields = [
             "id",
             "username",
             "first_name",
@@ -62,14 +65,13 @@ class UserSerializer(serializers.ModelSerializer):
             "email",
             "birth_date",
             "image",
-        )
+        ]
 
 
 class UpdatePasswordSerializer(serializers.ModelSerializer):
+    """ Модель редактирования пароля """
     old_password = serializers.CharField(write_only=True)
-    new_password = serializers.CharField(
-        write_only=True, validators=[validate_password]
-    )
+    new_password = serializers.CharField(write_only=True, validators=[validate_password])
 
     class Meta:
         model = User

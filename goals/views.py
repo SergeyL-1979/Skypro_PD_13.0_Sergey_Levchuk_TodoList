@@ -6,9 +6,10 @@ from rest_framework.pagination import LimitOffsetPagination
 
 from goals.filters import GoalDateFilter
 from goals.models import GoalCategory, Goal, GoalComment, Board
-from goals.permissions import BoardPermissions
+from goals.permissions import BoardPermissions, GoalCategoryPermissions, GoalPermissions, CommentPermissions
 from goals.serializers import (GoalCreateSerializer, GoalCategorySerializer,
-                               GoalSerializer, CommentSerializer, CommentCreateSerializer, GoalCategoryCreateSerializer,
+                               GoalSerializer, CommentSerializer, CommentCreateSerializer,
+                               GoalCategoryCreateSerializer,
                                BoardSerializer, BoardCreateSerializer, BoardListSerializer
                                )
 
@@ -26,30 +27,34 @@ class GoalCategoryListView(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalCategorySerializer
     pagination_class = LimitOffsetPagination
-    filter_backends = [
-        filters.OrderingFilter,
-        filters.SearchFilter,
-    ]
+    filter_backends = [DjangoFilterBackend, filters.OrderingFilter, filters.SearchFilter, ]
     ordering_fields = ["title", "created"]
+    filterset_fields = ["board", "user"]
     ordering = ["title"]
     search_fields = ["title"]
 
+    # def get_queryset(self):
+    #     return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
     def get_queryset(self):
-        return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
+        return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
 
 
 class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     """ Модель представления, которая позволяет редактировать и удалять объекты из Category """
     model = GoalCategory
     serializer_class = GoalCategorySerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, GoalCategoryPermissions]
 
+    # def get_queryset(self):
+    #     return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
     def get_queryset(self):
-        return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
+        return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
 
     def perform_destroy(self, instance):
-        instance.is_deleted = True
-        instance.save()
+        with transaction.atomic():
+            instance.is_deleted = True
+            instance.save()
+            Goal.objects.filter(category=instance).update(status=Goal.Status.archived)
         return instance
 
 
@@ -69,28 +74,28 @@ class GoalListView(ListAPIView):
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = GoalSerializer
     pagination_class = LimitOffsetPagination
-    filter_backends = [
-        DjangoFilterBackend,
-        filters.SearchFilter,
-        filters.OrderingFilter,
-    ]
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter, filters.OrderingFilter, ]
     filterset_class = GoalDateFilter
     search_fields = ["title", "description"]
     ordering_fields = ["due_date", "priority"]
     ordering = ["priority", "due_date"]
 
+    # def get_queryset(self):
+    #     return Goal.objects.filter(user=self.request.user)
     def get_queryset(self):
-        return Goal.objects.filter(user=self.request.user)
+        return Goal.objects.filter(category__board__participants__user=self.request.user)
 
 
 class GoalView(RetrieveUpdateDestroyAPIView):
     """ Модель представления, которая позволяет редактировать и удалять объекты Goal. """
     model = Goal
     serializer_class = GoalSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, GoalPermissions]
 
+    # def get_queryset(self):
+    #     return Goal.objects.filter(user=self.request.user)
     def get_queryset(self):
-        return Goal.objects.filter(user=self.request.user)
+        return Goal.objects.filter(category__board__participants__user=self.request.user)
 
     def perform_destroy(self, instance):
         instance.status = Goal.Status.archived
@@ -109,10 +114,12 @@ class CommentView(RetrieveUpdateDestroyAPIView):
     """ Модель представления, которая позволяет редактировать и удалять объекты Comment. """
     model = GoalComment
     serializer_class = CommentSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated, CommentPermissions]
 
+    # def get_queryset(self):
+    #     return GoalComment.objects.filter(user=self.request.user)
     def get_queryset(self):
-        return GoalComment.objects.filter(user=self.request.user)
+        return GoalComment.objects.filter(goal__category__board__participants__user=self.request.user)
 
 
 class CommentListView(ListAPIView):
@@ -128,12 +135,14 @@ class CommentListView(ListAPIView):
     filterset_fields = ["goal"]
     ordering = "-id"
 
+    # def get_queryset(self):
+    #     return GoalComment.objects.filter(user=self.request.user)
     def get_queryset(self):
-        return GoalComment.objects.filter(user=self.request.user)
+        return GoalComment.objects.filter(goal__category__board__participants__user=self.request.user)
 
 
 class BoardView(RetrieveUpdateDestroyAPIView):
-    """  """
+    """ Модель объекта `Доска` """
     model = Board
     permission_classes = [permissions.IsAuthenticated, BoardPermissions]
     serializer_class = BoardSerializer
@@ -155,14 +164,14 @@ class BoardView(RetrieveUpdateDestroyAPIView):
 
 
 class BoardCreateView(CreateAPIView):
-    """  """
+    """ Модель создания объекта `Доска`. """
     model = Board
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = BoardCreateSerializer
 
 
 class BoardListView(ListAPIView):
-    """  """
+    """ Модель отображения всех объектов `Доска`. """
     model = Board
     permission_classes = [permissions.IsAuthenticated]
     pagination_class = LimitOffsetPagination
