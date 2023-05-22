@@ -60,7 +60,10 @@ services:
       api:
         condition: service_started
     volumes:
+      # путь на удаленном сервере nginx.conf
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      # путь на локальной машине nginx.conf
+#      - ./deploy_nginx/nginx.conf:/etc/nginx/conf.d/default.conf
       - django_static:/usr/share/nginx/html/django_static
 
 volumes:
