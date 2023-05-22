@@ -38,7 +38,7 @@ class CreateUserSerializer(serializers.ModelSerializer):
 
 
 class LoginSerializer(serializers.Serializer):
-    """ Вход авторизованного пользователя """
+    """ Авторизация пользователя на сайте """
     username = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
 

@@ -1,11 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.utils.translation import gettext_lazy as _
-from django.db.models.signals import post_save
-from django.dispatch import receiver
 
 
-# Create your models here.
 class User(AbstractUser):
     """ Модель User переопределена от AbstractUser добавлены свои поля день рождения и аватарка """
     birth_date = models.DateField(null=True, blank=True)

@@ -34,8 +34,6 @@ class GoalCategoryListView(ListAPIView):
     ordering = ["title"]
     search_fields = ["title"]
 
-    # def get_queryset(self):
-    #     return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
     def get_queryset(self):
         return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
 
@@ -46,10 +44,6 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
     serializer_class = GoalCategorySerializer
     permission_classes = [permissions.IsAuthenticated, GoalCategoryPermissions]
 
-    # def get_queryset(self):
-    #     return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
-    # def get_queryset(self):
-    #     return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
     def get_queryset(self) -> QuerySet[GoalCategory]:
         return GoalCategory.objects.filter(board__participants__user=self.request.user).exclude(is_deleted=True)
 
@@ -83,8 +77,6 @@ class GoalListView(ListAPIView):
     ordering_fields = ["due_date", "priority"]
     ordering = ["priority", "due_date"]
 
-    # def get_queryset(self):
-    #     return Goal.objects.filter(user=self.request.user)
     def get_queryset(self):
         return Goal.objects.filter(category__board__participants__user=self.request.user)
 
@@ -95,8 +87,6 @@ class GoalView(RetrieveUpdateDestroyAPIView):
     serializer_class = GoalSerializer
     permission_classes = [permissions.IsAuthenticated, GoalPermissions]
 
-    # def get_queryset(self):
-    #     return Goal.objects.filter(user=self.request.user)
     def get_queryset(self):
         return Goal.objects.filter(category__board__participants__user=self.request.user)
 
@@ -119,8 +109,6 @@ class CommentView(RetrieveUpdateDestroyAPIView):
     serializer_class = CommentSerializer
     permission_classes = [permissions.IsAuthenticated, CommentPermissions]
 
-    # def get_queryset(self):
-    #     return GoalComment.objects.filter(user=self.request.user)
     def get_queryset(self):
         return GoalComment.objects.filter(goal__category__board__participants__user=self.request.user)
 
@@ -138,8 +126,6 @@ class CommentListView(ListAPIView):
     filterset_fields = ["goal"]
     ordering = "-id"
 
-    # def get_queryset(self):
-    #     return GoalComment.objects.filter(user=self.request.user)
     def get_queryset(self):
         return GoalComment.objects.filter(goal__category__board__participants__user=self.request.user)
 

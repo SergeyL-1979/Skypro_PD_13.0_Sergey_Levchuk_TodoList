@@ -20,12 +20,10 @@ class DatesModelMixin(models.Model):
 
 class GoalCategory(DatesModelMixin):
     """ Модель создания Категории для заметок """
-    board = models.ForeignKey("Board", verbose_name="Доска", on_delete=models.PROTECT, related_name="categories")
+    board = models.ForeignKey("Board", verbose_name="Доска ", on_delete=models.PROTECT, related_name="categories")
     title = models.CharField(verbose_name="Название", max_length=255)
     user = models.ForeignKey(User, verbose_name="Автор", on_delete=models.PROTECT)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
-    # created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    # updated = models.DateTimeField(verbose_name="Дата последнего обновления", auto_now=True)
 
     def save(self, *args, **kwargs):
         if not self.pk:  # if not self.id: # Когда объект только создается, у него еще нет id
@@ -72,11 +70,9 @@ class Goal(DatesModelMixin):
                                                 default=Priority.medium)
     user = models.ForeignKey(User, verbose_name="Автор", related_name="goals", on_delete=models.PROTECT)
     category = models.ForeignKey(GoalCategory, verbose_name="Категория", on_delete=models.PROTECT)
-    title = models.CharField(verbose_name="Название", max_length=255)
+    title = models.CharField(verbose_name="Заголовок цели", max_length=255)
     description = models.TextField(verbose_name="Описание", null=True, blank=True, default=None)
     due_date = models.DateField(verbose_name="Дата выполнения", null=True, blank=True, default=None)
-    # created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    # updated = models.DateTimeField(verbose_name="Дата последнего обновления", auto_now=True)
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -89,10 +85,8 @@ class Goal(DatesModelMixin):
 class GoalComment(DatesModelMixin):
     """ Модель создания объекта `comment` для модели заметок `goal` """
     goal = models.ForeignKey(Goal, verbose_name="Цель", related_name="goal_comments", on_delete=models.PROTECT)
-    user = models.ForeignKey(User, verbose_name="Автор", related_name="goal_comments", on_delete=models.PROTECT)
+    user = models.ForeignKey(User, verbose_name="Автор ", related_name="goal_comments", on_delete=models.PROTECT)
     text = models.TextField(verbose_name="Текст")
-    # created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    # updated = models.DateTimeField(verbose_name="Дата последнего обновления", auto_now=True)
 
     def __str__(self):
         return '{}: {}'.format(self.user, self.goal)
@@ -106,8 +100,6 @@ class Board(DatesModelMixin):
     """ Модель для работы с объекта `board` """
     title = models.CharField(verbose_name="Название", max_length=255)
     is_deleted = models.BooleanField(verbose_name="Удалена", default=False)
-    # created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    # updated = models.DateTimeField(verbose_name="Дата последнего обновления", auto_now=True)
 
     def __str__(self):
         return '{}'.format(self.title)
@@ -131,8 +123,6 @@ class BoardParticipant(DatesModelMixin):
     board = models.ForeignKey(Board, verbose_name="Доска", on_delete=models.PROTECT, related_name="participants")
     user = models.ForeignKey(User, verbose_name="Пользователь", on_delete=models.PROTECT, related_name="participants")
     role = models.PositiveSmallIntegerField(verbose_name="Роль", choices=Role.choices, default=Role.owner)
-    # created = models.DateTimeField(verbose_name="Дата создания", auto_now_add=True)
-    # updated = models.DateTimeField(verbose_name="Дата последнего обновления", auto_now=True)
 
     def __str__(self):
         return '{}: {}'.format(self.board, self.user)

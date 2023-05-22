@@ -1,6 +1,5 @@
 from django.db import transaction
 from rest_framework import serializers
-from rest_framework.exceptions import PermissionDenied
 
 from core.models import User
 from core.serializers import UserSerializer
@@ -43,7 +42,6 @@ class GoalSerializer(serializers.ModelSerializer):
         if value.is_deleted:
             raise serializers.ValidationError("Не разрешено в удаленной категории")
 
-        # if value.user != self.context["request"].user:
         if self.instance.category.board_id != value.board_id:
             raise serializers.ValidationError("Вы не создавали эту категорию")
         return value
@@ -70,18 +68,6 @@ class GoalCategoryCreateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("Вы должны быть владельцем или редактором")
         return value
 
-    # def validate_board(self, board: Board) -> Board:
-    #     if board.is_deleted:
-    #         raise serializers.ValidationError('Board is deleted')
-    #
-    #     if not BoardParticipant.objects.filter(
-    #             board_id=board.id,
-    #             role__in=[BoardParticipant.Role.owner, BoardParticipant.Role.writer],
-    #             user_id=self.context['request'].user.id,
-    #     ).exists():
-    #         raise PermissionDenied
-    #     return board
-
 
 class GoalCategorySerializer(serializers.ModelSerializer):
     """ Модель вывода объекта """
@@ -103,7 +89,6 @@ class CommentCreateSerializer(serializers.ModelSerializer):
         read_only_fields = ("id", "created", "updated", "user")
 
     def validate_goal(self, value):
-        # if value.user != self.context["request"].user:
         if not BoardParticipant.objects.filter(
                 board_id=value.category.board_id,
                 role__in=[BoardParticipant.Role.owner, BoardParticipant.Role.writer],
