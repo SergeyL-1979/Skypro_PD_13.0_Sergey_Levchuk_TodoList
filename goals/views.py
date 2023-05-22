@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import QuerySet
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.generics import CreateAPIView, ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework import permissions, filters
@@ -47,8 +48,10 @@ class GoalCategoryView(RetrieveUpdateDestroyAPIView):
 
     # def get_queryset(self):
     #     return GoalCategory.objects.filter(user=self.request.user, is_deleted=False)
-    def get_queryset(self):
-        return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
+    # def get_queryset(self):
+    #     return GoalCategory.objects.filter(board__participants__user=self.request.user, is_deleted=False)
+    def get_queryset(self) -> QuerySet[GoalCategory]:
+        return GoalCategory.objects.filter(board__participants__user=self.request.user).exclude(is_deleted=True)
 
     def perform_destroy(self, instance):
         with transaction.atomic():
