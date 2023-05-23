@@ -9,19 +9,14 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import environ
 import os
-from datetime import timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv(override=True)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# Для debug версии
 BASE_DIR = Path(__file__).resolve().parent.parent
-# Для сервера версии
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -33,7 +28,6 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = bool(int(os.environ.get('DEBUG', default=1)))
 
 ALLOWED_HOSTS = ["*"]
-
 
 # Application definition
 INSTALLED_APPS = [
@@ -52,7 +46,6 @@ INSTALLED_APPS = [
     # === Авторизация через социальные сети ===
     'social_django',
     # ==== Подключаем OpenAPI ====
-    # 'drf_spectacular',
     'drf_yasg',
     # ===== My Apps =====
     'core.apps.CoreConfig',
