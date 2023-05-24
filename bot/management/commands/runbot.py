@@ -39,9 +39,9 @@ class Command(BaseCommand):
 
     def handle_message(self, msg: Message):
         tg_user, created = TgUser.objects.get_or_create(
-            tg_id=msg.from_.id,
+            user_ud=msg.from_.id,
             defaults={
-                "tg_chat_id": msg.chat.id,
+                "chat_id": msg.chat.id,
                 "username": msg.from_.username,
             },
         )

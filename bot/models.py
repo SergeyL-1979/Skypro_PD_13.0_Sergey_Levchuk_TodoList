@@ -26,7 +26,7 @@ class TgUser(models.Model):
         self.verification_code = code
 
     def __str__(self):
-        return '{}'.format(self.user.first_name)
+        return '{}'.format(self.user)
 
     class Meta:
         verbose_name = "Телеграм Пользователь"
