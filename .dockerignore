@@ -4,6 +4,8 @@
 !core/migrations/
 !goals
 !goals/**
+!bot
+!bot/**
 !todolist
 !manage.py
 !requirements.txt
