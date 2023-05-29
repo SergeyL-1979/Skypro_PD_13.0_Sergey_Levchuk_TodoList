@@ -54,13 +54,16 @@ services:
 #    build: .
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: bot
+    environment:
+      SQL_DB_HOST: pgdb
+      SQL_DB_PORT: 5432
+      SQL_DB_NAME: ${SQL_DB_NAME}
+      SQL_DB_USER: ${SQL_DB_USER}
+      SQL_DB_PASSWORD: ${SQL_DB_PASSWORD}
+      BOT_TOKEN: ${BOT_TOKEN}
     depends_on:
       pgdb:
         condition: service_healthy
-    volumes:
-      - ..env:/app/.env
-      # путь на локальной машине nginx.conf
-      - django_static:/usr/share/nginx/html/django_static
     command: python manage.py runbot
 
   frontend:
