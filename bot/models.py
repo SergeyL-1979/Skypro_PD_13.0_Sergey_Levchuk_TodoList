@@ -1,9 +1,11 @@
 import random
+import string
+
 from django.db import models
 
 from core.models import User
 
-CODE_VOCABULARY = "qwertyuasdfghkzxvbnm123456789"
+CODE_VOCABULARY = string.ascii_letters + string.digits
 
 
 class TgUser(models.Model):

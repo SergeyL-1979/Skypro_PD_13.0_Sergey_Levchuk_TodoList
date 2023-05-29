@@ -1,4 +1,4 @@
-from django.conf import settings
+from todolist import settings
 from django.core.management import BaseCommand
 
 from bot.models import TgUser
