@@ -13,9 +13,7 @@ class TgUser(models.Model):
         - внутренний user_id пользователя (nullable поле)
     """
     chat_id = models.BigIntegerField(verbose_name='Чат ID')
-    # tg_chat_id = models.BigIntegerField(verbose_name="tg chat id")
     user_ud = models.BigIntegerField(verbose_name="user ud", unique=True)
-    # tg_id = models.BigIntegerField(verbose_name="tg id", unique=True)
     username = models.CharField(max_length=512, verbose_name="tg username", null=True, blank=True, default=None)
     user = models.ForeignKey(User, models.PROTECT, null=True, blank=True, default=None,
                              verbose_name='Связанный пользователь')
