@@ -54,6 +54,7 @@ services:
 #    build: .
     image: sergdef/todolist_skypro:${GITHUB_REF_NAME}-${GITHUB_RUN_ID}
     container_name: bot
+    restart: always
     environment:
       SQL_DB_HOST: pgdb
       SQL_DB_PORT: 5432

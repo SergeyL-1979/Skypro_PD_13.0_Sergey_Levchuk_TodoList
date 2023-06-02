@@ -7,7 +7,7 @@ from core.models import User
 
 
 class CreateUserSerializer(serializers.ModelSerializer):
-    """ Создаем пользователя """
+    """ Создаем пользователя и регистрируем его. """
     password = serializers.CharField(write_only=True, validators=[validate_password])
     password_repeat = serializers.CharField(write_only=True)
 
