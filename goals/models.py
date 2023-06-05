@@ -5,6 +5,7 @@ from core.models import User
 
 
 class DatesModelMixin(models.Model):
+    """ Модель для получения даты создания и даты редактирования объекта """
     created = models.DateTimeField(verbose_name="Дата создания")
     updated = models.DateTimeField(verbose_name="Дата последнего обновления")
 
@@ -52,7 +53,6 @@ class Goal(DatesModelMixin):
         :param: 'high' - Высокий
         :param: 'critical' - Критический
     """
-
     class Status(models.IntegerChoices):
         to_do = 1, "К выполнению"
         in_progress = 2, "В процессе"
@@ -111,7 +111,6 @@ class Board(DatesModelMixin):
 
 class BoardParticipant(DatesModelMixin):
     """ Модель позволяющая выбирать и назначать права пользователям """
-
     class Role(models.IntegerChoices):
         owner = 1, "Владелец"
         writer = 2, "Редактор"
