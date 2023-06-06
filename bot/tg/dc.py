@@ -7,6 +7,7 @@ from marshmallow import Schema, EXCLUDE
 
 @dataclass
 class MessageFrom:
+    """ Сообщение от пользователя """
     id: int
     first_name: str
     last_name: Optional[str]
@@ -18,6 +19,7 @@ class MessageFrom:
 
 @dataclass
 class Chat:
+    """ Чат пользователя """
     id: int
     type: str
     first_name: Optional[str] = None
@@ -31,6 +33,7 @@ class Chat:
 
 @dataclass
 class Message:
+    """ Сообщения """
     message_id: int
     from_: MessageFrom = field(metadata={"data_key": "from"})
     chat: Chat
@@ -42,6 +45,7 @@ class Message:
 
 @dataclass
 class UpdateObj:
+    """ Обновить объект """
     update_id: int
     message: Message
 
@@ -51,6 +55,7 @@ class UpdateObj:
 
 @dataclass
 class GetUpdatesResponse:
+    """ Получить ответ об обновлениях """
     ok: bool
     result: List[UpdateObj]
 
@@ -62,6 +67,7 @@ class GetUpdatesResponse:
 
 @dataclass
 class SendMessageResponse:
+    """ Отправить сообщение Ответ """
     ok: bool
     result: Message
 
