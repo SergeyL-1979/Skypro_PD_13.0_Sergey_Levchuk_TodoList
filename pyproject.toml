@@ -11,6 +11,7 @@ filterwarnings = [
     "ignore::UserWarning",
     # note the use of single quote below to denote "raw" strings in TOML
     'ignore:pkg_resources is deprecated as an API:DeprecationWarning',
+    'ignore:distutils:DeprecationWarning',
 ]
 
 #[pytest]
