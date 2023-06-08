@@ -1,56 +1,81 @@
-
-import factory.fuzzy
 import factory
+from pytest_factoryboy import register
+
+from django.contrib.auth import get_user_model
+
 from core.models import User
 from goals.models import GoalCategory, Board, Goal, GoalComment, BoardParticipant
+from bot.models import TgUser
+
+USER_MODEL = get_user_model()
 
 
+@register
 class UserFactory(factory.django.DjangoModelFactory):
+    username = factory.Faker('user_name')
+    password = factory.Faker('password')
+
     class Meta:
         model = User
 
-    username = factory.Faker("name")
-    email = factory.Faker("email")
-    password = "super1Password"
+    @classmethod
+    def _create(cls, model_class, *args, **kwargs) -> User:
+        return User.objects.create_user(*args, **kwargs)
 
 
+class SignUpRequest(factory.django.DjangoModelFactory):
+    username = factory.Faker('user_name')
+
+    class Meta:
+        model = USER_MODEL
+
+
+# ============================================================
+@register
 class BoardFactory(factory.django.DjangoModelFactory):
+    title = 'New Board'
+
     class Meta:
         model = Board
 
-    title = factory.fuzzy.FuzzyText(length=25)
-
 
 class BoardParticipantFactory(factory.django.DjangoModelFactory):
+    board = factory.SubFactory(BoardFactory)
+    user = factory.SubFactory(UserFactory)
+
     class Meta:
         model = BoardParticipant
 
+
+class CategoryFactory(factory.django.DjangoModelFactory):
+    title = 'New Category'
     board = factory.SubFactory(BoardFactory)
     user = factory.SubFactory(UserFactory)
 
-
-class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = GoalCategory
 
-    board = factory.SubFactory(BoardFactory)
-    title = factory.fuzzy.FuzzyText(length=10)
-    user = factory.SubFactory(UserFactory)
-
 
 class GoalFactory(factory.django.DjangoModelFactory):
+    title = 'New Goal'
+    description = 'Description of New Goal'
+    user = factory.SubFactory(UserFactory)
+    category = factory.SubFactory(CategoryFactory)
+    due_date = factory.Faker('date_object')
+
     class Meta:
         model = Goal
 
-    title = factory.fuzzy.FuzzyText(length=10)
+
+class GoalCommentFactory(factory.django.DjangoModelFactory):
+    text = 'test comment'
+    goal = factory.SubFactory(GoalFactory)
     user = factory.SubFactory(UserFactory)
-    category = factory.SubFactory(CategoryFactory)
 
-
-class CommentFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = GoalComment
 
-    text = factory.fuzzy.FuzzyText(length=10)
-    goal = factory.SubFactory(UserFactory)
-    user = factory.SubFactory(GoalFactory)
+
+class TuserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = TgUser
