@@ -78,5 +78,6 @@ class GoalCommentFactory(factory.django.DjangoModelFactory):
 
 
 class TuserFactory(factory.django.DjangoModelFactory):
+
     class Meta:
         model = TgUser
