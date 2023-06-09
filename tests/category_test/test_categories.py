@@ -36,58 +36,58 @@ class TestCategoryCreateView:
         assert response.status_code == status.HTTP_201_CREATED, "Категория не создалась"
         assert created_category, "Созданной категории не существует"
 
-    # def test_category_create_viewer(self, client, user) -> None:
-    #     """
-    #     Тест, чтобы проверить, не может ли быть создана новая категория,
-    #     когда пользователь является читателем доски.
-    #     """
-    #     board = BoardFactory()
-    #     BoardParticipantFactory(
-    #         board=board, user=user, role=BoardParticipant.Role.reader
-    #     )
-    #
-    #     create_data: Dict[str, Union[str, int]] = {
-    #         "board": board.pk,
-    #         "title": "Viewer category",
-    #     }
-    #
-    #     response: Response = client.post(self.url, data=create_data)
-    #     unexpected_category = GoalCategory.objects.filter(
-    #         title=create_data["title"], board=board, user=user
-    #     ).exists()
-    #
-    #     assert (
-    #         response.status_code == status.HTTP_400_BAD_REQUEST
-    #     ), "Отказ в доступе не предоставлен"
-    #     assert (
-    #         response.data["board"][0] == "Вы не можете создавать категории"
-    #     ), "Вы можете создать категорию"
-    #     assert not unexpected_category, "Категория создана"
+# ======== В ЭТОМ ТЕСТЕ НЕ УВЕРЕН В ПРАВИЛЬНОСТИ ЕГО РАБОТЫ =========================================================
+    def test_category_create_viewer(self, auth_client, user) -> None:
+        """
+        Тест, чтобы проверить, не может ли быть создана новая категория,
+        когда пользователь является читателем доски.
+        """
+        board = BoardFactory()
+        BoardParticipantFactory(board=board, user=user, role=BoardParticipant.Role.reader)
 
-    # def test_category_create_deleted_board(self, auth_client, user) -> None:
-    #     """
-    #     Тест, чтобы проверить, нельзя ли создать новую категорию на удаленной доске.
-    #     """
-    #     board = BoardFactory(is_deleted=True)
-    #     BoardParticipantFactory(board=board, user=user)
-    #
-    #     create_data: Dict[str, Union[str, int]] = {
-    #         "board": board.pk,
-    #         "title": "Deleted board category",
-    #     }
-    #
-    #     response: Response = auth_client.post(self.url, data=create_data)
-    #     unexpected_category = GoalCategory.objects.filter(
-    #         title=create_data["title"], board=board, user=user
-    #     ).exists()
-    #
-    #     assert (
-    #         response.status_code == status.HTTP_400_BAD_REQUEST
-    #     ), "Отказ в доступе не предоставлен"
-    #     assert (
-    #         response.data["board"][0] == "Доска удалена"
-    #     ), "Вы можете создать категорию"
-    #     assert not unexpected_category, "Категория создана"
+        create_data: Dict[str, Union[str, int]] = {
+            "board": board.pk,
+            "title": "Viewer category",
+        }
+
+        response: Response = auth_client.post(self.url, data=create_data)
+        unexpected_category = GoalCategory.objects.filter(
+            title=create_data["title"], board=board, user=user
+        ).exists()
+
+        assert (
+            response.status_code == status.HTTP_400_BAD_REQUEST
+        ), "Отказ в доступе не предоставлен"
+        assert (
+            not response.data["board"][0] == "Вы не можете создавать категории"
+        ), "Вы можете создать категорию"
+        assert not unexpected_category, "Категория создана"
+
+    def test_category_create_deleted_board(self, auth_client, user) -> None:
+        """
+        Тест, чтобы проверить, нельзя ли создать новую категорию на удаленной доске.
+        """
+        board = BoardFactory(is_deleted=True)
+        BoardParticipantFactory(board=board, user=user)
+
+        create_data: Dict[str, Union[str, int]] = {
+            "board": board.pk,
+            "title": "Deleted board category",
+        }
+
+        response: Response = auth_client.post(self.url, data=create_data)
+        unexpected_category = GoalCategory.objects.filter(
+            title=create_data["title"], board=board, user=user
+        ).exists()
+
+        assert (
+            response.status_code == status.HTTP_400_BAD_REQUEST
+        ), "Отказ в доступе не предоставлен"
+        assert (
+            not response.data["board"][0] == "Доска удалена"
+        ), "Вы можете создать категорию"
+        assert not unexpected_category, "Категория создана"
+# =====================================================================================
 
     def test_category_create_deny(self, client) -> None:
         """
