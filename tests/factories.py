@@ -4,6 +4,7 @@ from pytest_factoryboy import register
 from django.contrib.auth import get_user_model
 
 from core.models import User
+from core.serializers import UserSerializer
 from goals.models import GoalCategory, Board, Goal, GoalComment, BoardParticipant
 from bot.models import TgUser
 
@@ -24,10 +25,11 @@ class UserFactory(factory.django.DjangoModelFactory):
 
 
 class SignUpRequest(factory.django.DjangoModelFactory):
-    username = factory.Faker('user_name')
+    username = factory.SubFactory(UserFactory)
+    password = factory.SubFactory(UserFactory)
 
     class Meta:
-        model = USER_MODEL
+        model = User
 
 
 # ============================================================
@@ -61,7 +63,6 @@ class GoalFactory(factory.django.DjangoModelFactory):
     description = 'Description of New Goal'
     user = factory.SubFactory(UserFactory)
     category = factory.SubFactory(CategoryFactory)
-    due_date = factory.Faker('date_object')
 
     class Meta:
         model = Goal
