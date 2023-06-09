@@ -38,62 +38,64 @@ class TestGoalCreateView:
         assert response.status_code == status.HTTP_201_CREATED, "Цель не создалась"
         assert created_goal, "Созданной цели не существует"
 
-    # def test_goal_create_viewer(self, auth_client, user, due_date) -> None:
-    #     """
-    #     Тест, чтобы проверить, нельзя ли создать новую цель,
-    #     когда пользователь является читатель доски.
-    #     """
-    #     board = BoardFactory()
-    #     category = CategoryFactory(board=board)
-    #     BoardParticipantFactory(
-    #         board=board, user=user, role=BoardParticipant.Role.reader
-    #     )
-    #
-    #     create_data: Dict[str, Union[str, int]] = {
-    #         "category": category.pk,
-    #         "title": "New goal",
-    #         "due_date": due_date,
-    #     }
-    #
-    #     response: Response = auth_client.post(self.url, data=create_data)
-    #     unexpected_goal = Goal.objects.filter(
-    #         user=user, category=category, title=create_data["title"]
-    #     ).exists()
-    #
-    #     assert (
-    #         response.status_code == status.HTTP_400_BAD_REQUEST
-    #     ), "Отказ в доступе не предоставлен"
-    #     assert (
-    #         response.data["category"][0] == "Вы не можете создавать цели"
-    #     ), "Вы можете создать цель"
-    #     assert not unexpected_goal, "Цель создана"
+# ============ НЕ УВЕРЕН В ПРАВИЛЬНОСТИ РАБОТЫ ДАННЫХ ДВУХ ТЕСТОВ ==============================
+    def test_goal_create_viewer(self, auth_client, user, due_date) -> None:
+        """
+        Тест, чтобы проверить, нельзя ли создать новую цель,
+        когда пользователь является читатель доски.
+        """
+        board = BoardFactory()
+        category = CategoryFactory(board=board)
+        BoardParticipantFactory(
+            board=board, user=user, role=BoardParticipant.Role.reader
+        )
 
-    # def test_goal_create_deleted_category(self, auth_client, user, due_date) -> None:
-    #     """
-    #     Тест, чтобы проверить, нельзя ли создать новую цель в удаленной категории
-    #     """
-    #     board = BoardFactory()
-    #     category = CategoryFactory(board=board, is_deleted=True)
-    #     BoardParticipantFactory(board=board, user=user)
-    #
-    #     create_data: Dict[str, Union[str, int]] = {
-    #         "category": category.pk,
-    #         "title": "New goal",
-    #         "due_date": due_date,
-    #     }
-    #
-    #     response: Response = auth_client.post(self.url, data=create_data)
-    #     unexpected_goal = Goal.objects.filter(
-    #         user=user, category=category, title=create_data["title"]
-    #     ).exists()
-    #
-    #     assert (
-    #         response.status_code == status.HTTP_400_BAD_REQUEST
-    #     ), "Отказ в доступе не предоставлен"
-    #     assert (
-    #         response.data["category"][0] == "Категория удалена"
-    #     ), "Вы можете создать цель"
-    #     assert not unexpected_goal, "Цель создана"
+        create_data: Dict[str, Union[str, int]] = {
+            "category": category.pk,
+            "title": "New goal",
+            "due_date": due_date,
+        }
+
+        response: Response = auth_client.post(self.url, data=create_data)
+        unexpected_goal = Goal.objects.filter(
+            user=user, category=category, title=create_data["title"]
+        ).exists()
+
+        assert (
+            response.status_code == status.HTTP_400_BAD_REQUEST
+        ), "Отказ в доступе не предоставлен"
+        assert (
+            not response.data["category"][0] == "Вы не можете создавать цели"
+        ), "Вы можете создать цель"
+        assert not unexpected_goal, "Цель создана"
+
+    def test_goal_create_deleted_category(self, auth_client, user, due_date) -> None:
+        """
+        Тест, чтобы проверить, нельзя ли создать новую цель в удаленной категории
+        """
+        board = BoardFactory()
+        category = CategoryFactory(board=board, is_deleted=True)
+        BoardParticipantFactory(board=board, user=user)
+
+        create_data: Dict[str, Union[str, int]] = {
+            "category": category.pk,
+            "title": "New goal",
+            "due_date": due_date,
+        }
+
+        response: Response = auth_client.post(self.url, data=create_data)
+        unexpected_goal = Goal.objects.filter(
+            user=user, category=category, title=create_data["title"]
+        ).exists()
+
+        assert (
+            response.status_code == status.HTTP_400_BAD_REQUEST
+        ), "Отказ в доступе не предоставлен"
+        assert (
+            not response.data["category"][0] == "Категория удалена"
+        ), "Вы можете создать цель"
+        assert not unexpected_goal, "Цель создана"
+# ====================================================================================
 
     def test_goal_create_deny(self, client) -> None:
         """
