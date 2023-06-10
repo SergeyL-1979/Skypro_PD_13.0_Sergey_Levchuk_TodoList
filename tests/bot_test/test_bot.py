@@ -50,6 +50,8 @@ class TestTgUser:
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         mock.assert_not_called()
 
+
+# ================= TEST BRANCH GIT ==============
 # ================= ОРИГИНАЛ =====================
 # @pytest.mark.django_db
 # def test_bot_verify(auth_client, user: TgUser):
