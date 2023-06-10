@@ -31,12 +31,12 @@ class TestTgUser:
         assert response.status_code == status.HTTP_200_OK
         mock.assert_called_once_with(tg_user.chat_id, '[verification has been completed]')
 
-    def test_incorrect(self, auth_client, client, user: User):
+    def test_incorrect(self, auth_client):
         tg_user = factories.TuserFactory.create(
             chat_id='124315315',
             user_ud='124315315',
             username='test_user',
-            user=user,
+            user=None,
             verification_code='correct'
         )
         payload = {'verification_code': 'incorrect'}
@@ -46,10 +46,13 @@ class TestTgUser:
             mock.assert_not_called()
 
         tg_user.refresh_from_db()
-        assert tg_user.user == user
+        assert tg_user.user is None
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         mock.assert_not_called()
 
+
+
+# ================= TEST BRANCH GIT ==============
 # ================= ОРИГИНАЛ =====================
 # @pytest.mark.django_db
 # def test_bot_verify(auth_client, user: TgUser):

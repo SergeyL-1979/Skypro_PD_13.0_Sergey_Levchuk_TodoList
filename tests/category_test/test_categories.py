@@ -50,17 +50,13 @@ class TestCategoryCreateView:
             "title": "Viewer category",
         }
 
-        response: Response = auth_client.post(self.url, data=create_data)
+        response = auth_client.post(self.url, data=create_data)
         unexpected_category = GoalCategory.objects.filter(
             title=create_data["title"], board=board, user=user
         ).exists()
 
-        assert (
-            response.status_code == status.HTTP_400_BAD_REQUEST
-        ), "Отказ в доступе не предоставлен"
-        assert (
-            not response.data["board"][0] == "Вы не можете создавать категории"
-        ), "Вы можете создать категорию"
+        assert response.status_code == status.HTTP_400_BAD_REQUEST, "Отказ в доступе не предоставлен"
+        assert response.json() == {'board': ['Вы должны быть владельцем или редактором']}, "Вы можете создать категорию"
         assert not unexpected_category, "Категория создана"
 
     def test_category_create_deleted_board(self, auth_client, user) -> None:
@@ -75,19 +71,14 @@ class TestCategoryCreateView:
             "title": "Deleted board category",
         }
 
-        response: Response = auth_client.post(self.url, data=create_data)
+        response = auth_client.post(self.url, data=create_data)
         unexpected_category = GoalCategory.objects.filter(
             title=create_data["title"], board=board, user=user
         ).exists()
 
-        assert (
-            response.status_code == status.HTTP_400_BAD_REQUEST
-        ), "Отказ в доступе не предоставлен"
-        assert (
-            not response.data["board"][0] == "Доска удалена"
-        ), "Вы можете создать категорию"
+        assert response.status_code == status.HTTP_400_BAD_REQUEST, "Отказ в доступе не предоставлен"
+        assert response.json() == {'board': ['Не разрешено в удаленном объекте']}, "Вы можете создать категорию"
         assert not unexpected_category, "Категория создана"
-# =====================================================================================
 
     def test_category_create_deny(self, client) -> None:
         """
@@ -96,6 +87,4 @@ class TestCategoryCreateView:
         """
         response: Response = client.post(self.url)
 
-        assert (
-            response.status_code == status.HTTP_403_FORBIDDEN
-        ), "Отказ в доступе не предоставлен"
+        assert response.status_code == status.HTTP_403_FORBIDDEN, "Отказ в доступе не предоставлен"

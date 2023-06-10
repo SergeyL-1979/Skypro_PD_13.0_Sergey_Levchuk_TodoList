@@ -12,16 +12,7 @@ class TestSignUpView:
     url = reverse('core:signup')
 
     def test_user_created(self, client):
-        # data = SignUpRequest.build()
-        data = {
-            'username': 'test',
-            'first_name': 'test',
-            'last_name': 'test',
-            'email': 'test@test.ru',
-            'password': 'test12234567',
-            'password_repeat': 'test12234567'
-        }
-
+        data = SignUpRequest.build()
         response = client.post(self.url, data=data)
 
         assert response.status_code == status.HTTP_201_CREATED
@@ -40,19 +31,12 @@ class TestSignUpView:
         response = client.post(self.url, data=data)
         assert response.status_code == status.HTTP_400_BAD_REQUEST
 
-    def test_passwords_missmatch(self, client):
-        data = {
-            'username': 'test',
-            'first_name': 'test',
-            'last_name': 'test',
-            'email': 'test@test.ru',
-            'password': 'test12234567',
-            'password_repeat': 'test1223457'
-        }
+    def test_passwords_missmatch(self, client, faker):
+        data = SignUpRequest.build(password_repeat=faker.password())
         response = client.post(self.url, data=data)
 
         assert response.status_code == status.HTTP_400_BAD_REQUEST
-        # assert response.json() == {'non_field_errors': ['Passwords must match']}
+        assert response.json() == {'non_field_errors': ['password and password_repeat is not equal']}
 
     @staticmethod
     def _serialize_response(user: User, **kwargs) -> dict:
@@ -66,21 +50,10 @@ class TestSignUpView:
         data |= kwargs
         return data
 
+    def test_user_already_exists(self, client, user):
+        data = SignUpRequest.build(username=user.username)
+        response = client.post(self.url, data=data)
 
-# ===== ДАННЫЙ МЕТОД ТЕСТИРОВАНИЯ НЕ ПРОХОДИТ  ========================
-#     def test_passwords_missmatch(self, client, faker):
-#         data = SignUpRequest.build(password_repeat=faker.password())
-#         response = client.post(self.url, data=data)
-#
-#         assert response.status_code == status.HTTP_400_BAD_REQUEST
-#         assert response.json() == {'non_field_errors': ['Passwords must match']}
-#
-#
-#     def test_user_already_exists(self, client, user):
-#         data = SignUpRequest.build(username=user.username)
-#
-#         response = client.post(self.url, data=data)
-#
-#         assert response.status_code == status.HTTP_400_BAD_REQUEST
-#         assert response.json() == {'username': ['A user with that username already exists.']}
+        assert response.status_code == status.HTTP_400_BAD_REQUEST
+        assert response.json() == {'username': ['A user with that username already exists.']}
 

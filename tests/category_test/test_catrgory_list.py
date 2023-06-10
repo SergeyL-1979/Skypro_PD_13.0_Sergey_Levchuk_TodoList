@@ -30,12 +30,10 @@ class TestCategoryListView:
         sorted_expected_response: list = sorted(
             expected_response, key=lambda x: x["title"]
         )
-        response: Response = auth_client.get(self.url)
+        response = auth_client.get(self.url)
 
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-        assert (
-            response.data == sorted_expected_response
-        ), "Списки категорий не совпадают"
+        assert response.json() == sorted_expected_response, "Списки категорий не совпадают"
 
     def test_deleted_category_list_participant(self, auth_client, user) -> None:
         """
@@ -51,10 +49,10 @@ class TestCategoryListView:
         unexpected_response: Dict = GoalCategorySerializer(
             deleted_categories, many=True
         ).data
-        response: Response = auth_client.get(self.url)
+        response = auth_client.get(self.url)
 
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-        assert not response.data == unexpected_response, "Получены удаленные категории"
+        assert not response.json() == unexpected_response, "Получены удаленные категории"
 
     def test_category_list_not_participant(self, auth_client) -> None:
         """
@@ -66,10 +64,10 @@ class TestCategoryListView:
         BoardParticipantFactory(board=board)
 
         unexpected_response: Dict = BoardCreateSerializer(categories, many=True).data
-        response: Response = auth_client.get(self.url)
+        response = auth_client.get(self.url)
 
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-        assert not response.data == unexpected_response, "Получены чужие категории"
+        assert not response.json() == unexpected_response, "Получены чужие категории"
 
     def test_category_create_deny(self, client) -> None:
         """
@@ -78,7 +76,5 @@ class TestCategoryListView:
         """
         response: Response = client.post(self.url)
 
-        assert (
-            response.status_code == status.HTTP_403_FORBIDDEN
-        ), "Отказ в доступе не предоставлен"
+        assert response.status_code == status.HTTP_403_FORBIDDEN, "Отказ в доступе не предоставлен"
 

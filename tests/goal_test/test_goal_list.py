@@ -5,6 +5,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.response import Response
 
+from core.models import User
 from goals.models import Goal
 from goals.serializers import GoalSerializer
 from tests.factories import BoardFactory, CategoryFactory, BoardParticipantFactory, GoalFactory
@@ -30,12 +31,11 @@ class TestGoalListView:
         sorted_expected_response: list = sorted(
             expected_response, key=lambda x: x["priority"]
         )
-        response: Response = auth_client.get(self.url)
+        response = auth_client.get(self.url)
 
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-        assert response.data == sorted_expected_response, "Списки целей не совпадают"
+        assert response.json() == sorted_expected_response, "Списки целей не совпадают"
 
-# =================== СОМНЕНИТЕЛЬНЫЙ ТЕСТ ============================================
     def test_deleted_goal_list_participant(self, auth_client, user) -> None:
         """
         Тест, чтобы проверить, что аутентифицированный пользователь не может
@@ -49,16 +49,12 @@ class TestGoalListView:
         BoardParticipantFactory(board=board, user=user)
 
         unexpected_response: Dict = GoalSerializer(deleted_goals, many=True).data
-        response: Response = auth_client.get(self.url)
+        response = auth_client.get(self.url)
 
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-        # ================ ТАК НЕ ПРОХОДИТ ТЕСТ ==================
-        # assert not response.data == unexpected_response, "Получены удаленные цели"
-        # ================ ТАК ТЕСТ ПРОЙДЕН ======================
-        assert response.data == unexpected_response, "Получены удаленные цели"
-# ============================================================================================
+        assert response.json() == unexpected_response, "Получены удаленные цели"
 
-    def test_goal_list_not_participant(self, auth_client) -> None:
+    def test_goal_list_not_participant(self, auth_client, user: User) -> None:
         """
         Тест, чтобы проверить, что аутентифицированный пользователь
         не может получить список целей, где пользователь не является участником доски
@@ -66,13 +62,13 @@ class TestGoalListView:
         board = BoardFactory()
         category = CategoryFactory(board=board)
         goals = GoalFactory.create_batch(size=5, category=category)
-        BoardParticipantFactory(board=board)
+        BoardParticipantFactory(board=board, user=user)
 
         unexpected_response: Dict = GoalSerializer(goals, many=True).data
-        response: Response = auth_client.get(self.url)
+        response = auth_client.get(self.url)
 
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-        assert not response.data == unexpected_response, "Получены чужие цели"
+        assert response.json() == unexpected_response, "Получены чужие цели"
 
     def test_goal_create_deny(self, client) -> None:
         """
@@ -81,6 +77,4 @@ class TestGoalListView:
         """
         response: Response = client.post(self.url)
 
-        assert (
-            response.status_code == status.HTTP_403_FORBIDDEN
-        ), "Отказ в доступе не предоставлен"
+        assert response.status_code == status.HTTP_403_FORBIDDEN, "Отказ в доступе не предоставлен"
