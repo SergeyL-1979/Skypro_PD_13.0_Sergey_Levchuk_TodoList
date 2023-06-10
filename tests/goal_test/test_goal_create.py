@@ -56,17 +56,13 @@ class TestGoalCreateView:
             "due_date": due_date,
         }
 
-        response: Response = auth_client.post(self.url, data=create_data)
+        response = auth_client.post(self.url, data=create_data)
         unexpected_goal = Goal.objects.filter(
             user=user, category=category, title=create_data["title"]
         ).exists()
 
-        assert (
-            response.status_code == status.HTTP_400_BAD_REQUEST
-        ), "Отказ в доступе не предоставлен"
-        assert (
-            not response.data["category"][0] == "Вы не можете создавать цели"
-        ), "Вы можете создать цель"
+        assert response.status_code == status.HTTP_400_BAD_REQUEST, "Отказ в доступе не предоставлен"
+        assert response.json() == {'category': ['Вы не создавали эту категорию']}, "Вы можете создать цель"
         assert not unexpected_goal, "Цель создана"
 
     def test_goal_create_deleted_category(self, auth_client, user, due_date) -> None:
@@ -83,19 +79,14 @@ class TestGoalCreateView:
             "due_date": due_date,
         }
 
-        response: Response = auth_client.post(self.url, data=create_data)
+        response = auth_client.post(self.url, data=create_data)
         unexpected_goal = Goal.objects.filter(
             user=user, category=category, title=create_data["title"]
         ).exists()
 
-        assert (
-            response.status_code == status.HTTP_400_BAD_REQUEST
-        ), "Отказ в доступе не предоставлен"
-        assert (
-            not response.data["category"][0] == "Категория удалена"
-        ), "Вы можете создать цель"
+        assert response.status_code == status.HTTP_400_BAD_REQUEST, "Отказ в доступе не предоставлен"
+        assert response.json() == {'category': ['Не разрешено в удаленной категории']}
         assert not unexpected_goal, "Цель создана"
-# ====================================================================================
 
     def test_goal_create_deny(self, client) -> None:
         """
@@ -104,6 +95,4 @@ class TestGoalCreateView:
         """
         response: Response = client.post(self.url)
 
-        assert (
-            response.status_code == status.HTTP_403_FORBIDDEN
-        ), "Отказ в доступе не предоставлен"
+        assert response.status_code == status.HTTP_403_FORBIDDEN, "Отказ в доступе не предоставлен"

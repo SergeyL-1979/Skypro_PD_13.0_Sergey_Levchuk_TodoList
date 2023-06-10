@@ -7,7 +7,7 @@ from rest_framework import status
 from rest_framework.response import Response
 
 from goals.models import Board
-from goals.serializers import BoardListSerializer, BoardCreateSerializer, BoardSerializer
+from goals.serializers import BoardCreateSerializer, BoardSerializer
 from tests.factories import BoardParticipantFactory, BoardFactory
 
 
