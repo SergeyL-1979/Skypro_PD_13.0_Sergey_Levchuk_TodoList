@@ -24,7 +24,7 @@ def another_user(user_factory):
     return user_factory.create()
 
 
-@pytest.fixture
+@pytest.fixture()
 def due_date():
     """ Приспособление, которое создает дату с временной дельтой от текущей даты """
     due_date: datetime = datetime.date.today() + datetime.timedelta(days=7)

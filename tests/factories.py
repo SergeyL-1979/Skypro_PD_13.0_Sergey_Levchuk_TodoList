@@ -4,7 +4,6 @@ from pytest_factoryboy import register
 from django.contrib.auth import get_user_model
 
 from core.models import User
-from core.serializers import UserSerializer
 from goals.models import GoalCategory, Board, Goal, GoalComment, BoardParticipant
 from bot.models import TgUser
 
@@ -24,12 +23,10 @@ class UserFactory(factory.django.DjangoModelFactory):
         return User.objects.create_user(*args, **kwargs)
 
 
-class SignUpRequest(factory.django.DjangoModelFactory):
-    username = factory.SubFactory(UserFactory)
-    password = factory.SubFactory(UserFactory)
-
-    class Meta:
-        model = User
+class SignUpRequest(factory.DictFactory):
+    username = factory.Faker('user_name')
+    password = factory.Faker('password')
+    password_repeat = factory.LazyAttribute(lambda o: o.password)
 
 
 # ============================================================
@@ -41,6 +38,7 @@ class BoardFactory(factory.django.DjangoModelFactory):
         model = Board
 
 
+@register
 class BoardParticipantFactory(factory.django.DjangoModelFactory):
     board = factory.SubFactory(BoardFactory)
     user = factory.SubFactory(UserFactory)
@@ -49,6 +47,7 @@ class BoardParticipantFactory(factory.django.DjangoModelFactory):
         model = BoardParticipant
 
 
+@register
 class CategoryFactory(factory.django.DjangoModelFactory):
     title = 'New Category'
     board = factory.SubFactory(BoardFactory)
@@ -58,6 +57,7 @@ class CategoryFactory(factory.django.DjangoModelFactory):
         model = GoalCategory
 
 
+@register
 class GoalFactory(factory.django.DjangoModelFactory):
     title = 'New Goal'
     description = 'Description of New Goal'
@@ -68,6 +68,7 @@ class GoalFactory(factory.django.DjangoModelFactory):
         model = Goal
 
 
+@register
 class GoalCommentFactory(factory.django.DjangoModelFactory):
     text = 'test comment'
     goal = factory.SubFactory(GoalFactory)
@@ -77,7 +78,9 @@ class GoalCommentFactory(factory.django.DjangoModelFactory):
         model = GoalComment
 
 
+@register
 class TuserFactory(factory.django.DjangoModelFactory):
+    user = factory.SubFactory(UserFactory)
 
     class Meta:
         model = TgUser
