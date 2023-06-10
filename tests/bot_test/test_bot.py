@@ -50,10 +50,9 @@ class TestTgUser:
         assert response.status_code == status.HTTP_400_BAD_REQUEST
         mock.assert_not_called()
 
-
-
-# ================= TEST BRANCH GIT ==============
-# ================= ОРИГИНАЛ =====================
+# ================= TEST BRANCH GIT ============================
+# === Проверка работы проекта на сервере и DockerHub ===========
+# ================= ОРИГИНАЛ ===================================
 # @pytest.mark.django_db
 # def test_bot_verify(auth_client, user: TgUser):
 #     factories.TuserFactory.create(
