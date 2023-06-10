@@ -54,22 +54,21 @@ class TestGoalListView:
         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
         assert response.json() == unexpected_response, "Получены удаленные цели"
 
-# ================== НЕ МОГУ ПОНЯТЬ ДОЛЖЕН ПОЛУЧИТЬ ПУСТОЙ СПИСОК А ПОЛУЧЕТ ЦЕЛИ ======================================
-#     def test_goal_list_not_participant(self, auth_client, user: User) -> None:
-#         """
-#         Тест, чтобы проверить, что аутентифицированный пользователь
-#         не может получить список целей, где пользователь не является участником доски
-#         """
-#         board = BoardFactory()
-#         category = CategoryFactory(board=board)
-#         goals = GoalFactory.create_batch(size=5, category=category)
-#         BoardParticipantFactory(board=board)
-#
-#         unexpected_response: Dict = GoalSerializer(goals, many=True).data
-#         response = auth_client.get(self.url)
-#
-#         assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
-#         assert response.json() == unexpected_response, "Получены чужие цели"
+    def test_goal_list_not_participant(self, auth_client, user: User) -> None:
+        """
+        Тест, чтобы проверить, что аутентифицированный пользователь
+        не может получить список целей, где пользователь не является участником доски
+        """
+        board = BoardFactory()
+        category = CategoryFactory(board=board)
+        goals = GoalFactory.create_batch(size=5, category=category)
+        BoardParticipantFactory(board=board, user=user)
+
+        unexpected_response: Dict = GoalSerializer(goals, many=True).data
+        response = auth_client.get(self.url)
+
+        assert response.status_code == status.HTTP_200_OK, "Запрос не прошел"
+        assert response.json() == unexpected_response, "Получены чужие цели"
 
     def test_goal_create_deny(self, client) -> None:
         """
