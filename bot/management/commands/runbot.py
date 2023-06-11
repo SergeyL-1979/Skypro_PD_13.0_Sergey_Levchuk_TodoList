@@ -35,7 +35,7 @@ class Command(BaseCommand):
                 self.handle_message(item.message)
 
     def handle_message(self, msg: Message):
-        logger.info(f'{msg}')
+        # logger.info(f'{msg}')
         tg_user, created = TgUser.objects.get_or_create(user_ud=msg.from_.id,
                                                         defaults={
                                                             "chat_id": msg.chat.id,
@@ -134,7 +134,7 @@ class Command(BaseCommand):
     def fetch_board(self, msg: Message, tg_user: TgUser):
         """ Получаем список участников Board. Если участника нет Board, то отправим ему сообщение"""
         boards = BoardParticipant.objects.filter(user=tg_user.user)
-        logger.info(boards)
+        # logger.info(boards)
         if boards:
             [self.tg_client.send_message(msg.chat.id, f"Название карточек: {item.board}\n") for item in boards]
         else:
@@ -202,8 +202,10 @@ class Command(BaseCommand):
         if 'user' in user_states['state']:
             del user_states['state']['user']
             del user_states['state']['msg_chat_id']
+
             if 'category' in user_states['state']:
                 del user_states['state']['category']
+
             if 'goal_title' in user_states['state']:
                 del user_states['state']['goal_title']
         self.tg_client.send_message(tg_user.chat_id, 'Операция отменена')
