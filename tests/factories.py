@@ -81,6 +81,10 @@ class GoalCommentFactory(factory.django.DjangoModelFactory):
 @register
 class TuserFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
+    chat_id = factory.Faker('pyint')
+    user_ud = chat_id
+    username = user,
+    verification_code = 'correct'
 
     class Meta:
         model = TgUser
