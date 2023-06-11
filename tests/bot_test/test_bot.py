@@ -14,6 +14,7 @@ class TestTgUser:
     url: str = reverse('bot:verify')
 
     def test_bot_verify(self, auth_client, user: User):
+        """ Проверяем пользователя на аутентификацию через Телеграмм бота """
         tg_user = factories.TuserFactory.create(
             chat_id='124315315',
             user_ud='124315315',
@@ -32,6 +33,7 @@ class TestTgUser:
         mock.assert_called_once_with(tg_user.chat_id, '[verification has been completed]')
 
     def test_incorrect(self, auth_client):
+        """ Проверка на валидности кода верификации """
         tg_user = factories.TuserFactory.create(
             chat_id='124315315',
             user_ud='124315315',
