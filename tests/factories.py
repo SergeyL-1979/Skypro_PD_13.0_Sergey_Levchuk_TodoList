@@ -79,12 +79,24 @@ class GoalCommentFactory(factory.django.DjangoModelFactory):
 
 
 @register
-class TuserFactory(factory.django.DjangoModelFactory):
-    user = factory.SubFactory(UserFactory)
-    chat_id = factory.Faker('pyint')
-    user_ud = chat_id
-    username = user,
-    verification_code = 'correct'
+class TgUserFactory(factory.django.DjangoModelFactory):
+    chat_id = factory.Faker('pyint',)
+    user_ud = factory.Faker('pyint',)
+    username = factory.Faker('user_name')
+    verification_code = factory.Faker('pystr', max_chars=20)
 
     class Meta:
         model = TgUser
+
+
+# ====== СТАРАЯ ВЕРСИЯ =========
+# @register
+# class TuserFactory(factory.django.DjangoModelFactory):
+#     user = factory.SubFactory(UserFactory)
+#     chat_id = factory.Faker('pyint')
+#     user_ud = chat_id
+#     username = user,
+#     verification_code = 'correct'
+#
+#     class Meta:
+#         model = TgUser
