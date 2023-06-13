@@ -79,6 +79,19 @@ class GoalCommentFactory(factory.django.DjangoModelFactory):
 
 
 @register
+class TuserFactory(factory.django.DjangoModelFactory):
+    user = factory.SubFactory(UserFactory)
+    chat_id = factory.Faker('pyint')
+    user_ud = chat_id
+    username = user,
+    verification_code = 'correct'
+
+    class Meta:
+        model = TgUser
+
+
+# ======== ПРИМЕР ТЕСТА ТЕЛЕГРАММ БОТА ОТ УЧИТЕЛЯ =========================
+@register
 class TgUserFactory(factory.django.DjangoModelFactory):
     chat_id = factory.Faker('pyint',)
     user_ud = factory.Faker('pyint',)
@@ -87,16 +100,3 @@ class TgUserFactory(factory.django.DjangoModelFactory):
 
     class Meta:
         model = TgUser
-
-
-# ====== СТАРАЯ ВЕРСИЯ =========
-# @register
-# class TuserFactory(factory.django.DjangoModelFactory):
-#     user = factory.SubFactory(UserFactory)
-#     chat_id = factory.Faker('pyint')
-#     user_ud = chat_id
-#     username = user,
-#     verification_code = 'correct'
-#
-#     class Meta:
-#         model = TgUser
