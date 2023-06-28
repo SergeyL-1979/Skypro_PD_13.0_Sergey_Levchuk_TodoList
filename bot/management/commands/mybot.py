@@ -7,7 +7,7 @@ from django.conf import settings
 from django.core.management import BaseCommand
 
 from bot.models import TgUser
-from goals.models import Goal, GoalCategory, BoardParticipant, Board
+from goals.models import Goal, GoalCategory, BoardParticipant
 
 # =============== Enable logging  ==============================
 logging.basicConfig(format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO)
@@ -30,23 +30,6 @@ def handle_user_without_verification(msg: Message):
     """ Проверочный код. Обрабатывать пользователя без проверки """
     tg_user, _ = TgUser.objects.get_or_create(user_ud=msg.from_user.id,
                                               defaults={"chat_id": msg.chat.id, "username": msg.from_user.username})
-    if 'user' in user_states['state']:
-        del user_states['state']['user']
-        del user_states['state']['chat_id']
-
-        if 'category' in user_states['state']:
-            del user_states['state']['category']
-
-        if 'goal_title' in user_states['state']:
-            del user_states['state']['goal_title']
-
-        if 'description' in user_states['state']:
-            del user_states['state']['description']
-
-        if 'due_date' in user_states['state']:
-            del user_states['state']['due_date']
-
-    bot.send_message(tg_user.chat_id, 'Операция отменена')
 
     if tg_user.user:
         send_welcome(msg)
@@ -61,6 +44,22 @@ def handle_user_without_verification(msg: Message):
         tg_user.set_verification_code()
         tg_user.save(update_fields=["verification_code"])
         bot.send_message(msg.chat.id, f"Верификационный  код: {tg_user.verification_code}")
+
+    if 'user' in user_states['state']:
+        del user_states['state']['user']
+        del user_states['state']['chat_id']
+        bot.send_message(tg_user.chat_id, 'Операция отменена')
+        if 'category' in user_states['state']:
+            del user_states['state']['category']
+
+        if 'goal_title' in user_states['state']:
+            del user_states['state']['goal_title']
+
+        if 'description' in user_states['state']:
+            del user_states['state']['description']
+
+        if 'due_date' in user_states['state']:
+            del user_states['state']['due_date']
 
 
 def send_welcome(msg: Message):
